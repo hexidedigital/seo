@@ -1,0 +1,20 @@
+<?php
+
+namespace Hexide\Seo\Http\Requests;
+
+use Hexide\Seo\Models\SeoScript;
+use Illuminate\Foundation\Http\FormRequest;
+
+class ScriptStoreRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        $types = implode(',', SeoScript::getTypes());
+
+        return [
+            'title' => ['required', 'string', 'max:191'],
+            'type' => ['required', 'string', 'in:'.$types],
+            'text' => ['required', 'string', 'max:50000'],
+        ];
+    }
+}

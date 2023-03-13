@@ -1,0 +1,31 @@
+{
+    "name": "hexidedigital/seo",
+    "description": "Package for easily managing SEO",
+    "autoload": {
+        "psr-4": {
+            "Hexide\\Seo\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Illia Volynets",
+            "email": "illiavolynets77@gmail.com"
+        }
+    ],
+    "require": {
+        "astrotomic/laravel-translatable": "^11.1",
+        "ext-fileinfo": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hexide\\Seo\\SeoServiceProvider"
+            ],
+            "aliases": {
+                "SeoHelper": "Hexide\\Seo\\Facades\\SeoHelper",
+                "Meta": "Hexide\\Seo\\Facades\\Meta",
+                "Microformat": "Hexide\\Seo\\Facades\\Microformat"
+            }
+        }
+    }
+}
