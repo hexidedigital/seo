@@ -44,4 +44,4 @@ or [Facebook](https://www.facebook.com/hexide.digital)
 
 # License
 
-[MIT](https://github.com/epicmaxco/vuestic-admin/blob/master/LICENSE) license.
+[MIT](https://github.com/hexidedigital/seo/blob/main/LICENSE) license.
