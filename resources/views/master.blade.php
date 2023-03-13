@@ -2,7 +2,7 @@
 <head>
     {!! Meta::getMetaView() !!}
     <link href="{{asset('seo/css/app.css')}}" rel="stylesheet">
-    @vite('resources/js/app.js')  {{--TODO: REMOVE ME--}}
+    <script src="{{asset('seo/js/app.js')}}"></script>
 </head>
 <body>
     @yield('content')
