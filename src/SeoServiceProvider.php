@@ -124,6 +124,14 @@ class SeoServiceProvider extends ServiceProvider
     private function registerViews(): void
     {
         $this->loadViewsFrom($this->packagePath('resources/views'), 'seo');
+
+
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                $this->packagePath('resources/views') => resource_path('views/vendor/seo'),
+            ], ['views', 'assets']);
+        }
     }
 
     private function routeConfiguration(string $group): array
