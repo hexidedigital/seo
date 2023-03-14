@@ -1,5 +1,5 @@
 {
-    "name": "hexidedigital/seo",
+    "name": "hexide-digital/seo",
     "description": "Package for easily managing SEO",
     "autoload": {
         "psr-4": {
