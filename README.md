@@ -9,7 +9,7 @@ This package requires **PHP 8.1 or higher** and **Laravel 9**.
 You can install this package via composer using:
 
 ```bash
-composer require hexide/seo
+composer require hexide-digital/seo
 ```
 
 or manually add line to `composer.json`
