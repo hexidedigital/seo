@@ -2,11 +2,6 @@
     "name": "hexide-digital/seo",
     "description": "Package for easily managing SEO",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Hexide\\Seo\\": "src"
-        }
-    },
     "authors": [
         {
             "name": "Illia Volynets",
@@ -14,19 +9,24 @@
         }
     ],
     "require": {
-        "astrotomic/laravel-translatable": "^11.1",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "astrotomic/laravel-translatable": "^11.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hexide\\Seo\\": "src"
+        }
     },
     "extra": {
         "laravel": {
+            "aliases": {
+                "Meta": "Hexide\\Seo\\Facades\\Meta",
+                "Microformat": "Hexide\\Seo\\Facades\\Microformat",
+                "SeoHelper": "Hexide\\Seo\\Facades\\SeoHelper"
+            },
             "providers": [
                 "Hexide\\Seo\\SeoServiceProvider"
-            ],
-            "aliases": {
-                "SeoHelper": "Hexide\\Seo\\Facades\\SeoHelper",
-                "Meta": "Hexide\\Seo\\Facades\\Meta",
-                "Microformat": "Hexide\\Seo\\Facades\\Microformat"
-            }
+            ]
         }
     }
 }
