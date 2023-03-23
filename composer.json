@@ -1,6 +1,7 @@
 {
     "name": "hexide-digital/seo",
     "description": "Package for easily managing SEO",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Hexide\\Seo\\": "src"
