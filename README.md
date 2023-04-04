@@ -4,7 +4,7 @@ Package developed to make seo settings easier.
 
 # Requirements
 
-This package requires **PHP 8.1 or higher** and **Laravel 9 or higher**.
+This package requires **PHP 8.1** and **Laravel 8** or higher.
 
 # Installation
 
