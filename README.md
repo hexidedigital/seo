@@ -1,8 +1,10 @@
 # Seo management
+
 Package developed to make seo settings easier.
+
 # Requirements
 
-This package requires **PHP 8.1 or higher** and **Laravel 9**.
+This package requires **PHP 8.1** and **Laravel 8** or higher.
 
 # Installation
 
@@ -29,6 +31,7 @@ php artisan vendor:publish --provider="Hexide\Seo\SeoServiceProvider" --tag="con
 ```
 
 # Usage
+
 WIP
 
 # Can I hire you guys?
