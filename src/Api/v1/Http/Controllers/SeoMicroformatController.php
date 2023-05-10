@@ -11,7 +11,6 @@ class SeoMicroformatController extends Controller
 {
     public function __construct(private SeoModelService $modelService)
     {
-        //
     }
 
     public function show($model_namespace, $model_id, $format)

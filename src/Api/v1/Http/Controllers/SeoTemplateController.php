@@ -12,7 +12,6 @@ class SeoTemplateController extends Controller
 {
     public function __construct(private SeoModelService $modelService)
     {
-        //
     }
 
     public function modelMeta(Request $request, $model_namespace, $model_id)

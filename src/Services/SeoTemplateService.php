@@ -25,8 +25,6 @@ class SeoTemplateService
             $text
         );
 
-        $text = SeoHelper::cleanSpaces($text);
-
-        return $text;
+        return SeoHelper::cleanSpaces($text);
     }
 }

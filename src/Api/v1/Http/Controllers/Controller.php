@@ -65,7 +65,7 @@ class Controller extends BaseController
     protected function respondWithError($message)
     {
         return $this->respondWithArray([
-            'message'   => $message,
+            'message' => $message,
             'error' => [
                 'http_code' => $this->statusCode,
             ],
@@ -90,9 +90,6 @@ class Controller extends BaseController
 
     /**
      * Respond with a given array of items.
-     *
-     * @param array $array
-     * @param array $headers
      *
      * @return JsonResponse
      */

@@ -75,11 +75,9 @@ class SeoServiceProvider extends ServiceProvider
     private function loadConfig(): void
     {
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 $this->packagePath('config/config.php') => config_path('hexide-seo.php'),
             ], 'config');
-
         }
     }
 
@@ -121,8 +119,6 @@ class SeoServiceProvider extends ServiceProvider
     private function registerViews(): void
     {
         $this->loadViewsFrom($this->packagePath('resources/views'), 'seo');
-
-
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -175,6 +171,6 @@ class SeoServiceProvider extends ServiceProvider
 
     private function packagePath($path): string
     {
-        return __DIR__ . "/../$path";
+        return __DIR__ . "/../{$path}";
     }
 }

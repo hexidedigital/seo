@@ -33,11 +33,10 @@ class SeoTemplate extends Model
     }
 
     /**
-     * @param             $query
-     * @param string|null $modelTable
-     * @param string|null $translationsTable
-     * @param string|null $modelTableKey
-     * @param string|null $translationsTableKey
+     * @param null|string $modelTable
+     * @param null|string $translationsTable
+     * @param null|string $modelTableKey
+     * @param null|string $translationsTableKey
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
@@ -64,7 +63,7 @@ class SeoTemplate extends Model
         return $query->leftJoin(
             $translationsTable,
             function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey): void {
-                $join->on("$translationsTable.$translationsTableKey", '=', "$modelTable.$modelTableKey")
+                $join->on("{$translationsTable}.{$translationsTableKey}", '=', "{$modelTable}.{$modelTableKey}")
                     ->where('locale', '=', app()->getLocale());
             }
         );

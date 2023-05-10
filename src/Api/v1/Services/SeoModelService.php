@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Hexide\Seo\Api\v1\Services;
 
 use Illuminate\Container\Container;
+use Exception;
+use Log;
+use Str;
 
 class SeoModelService
 {
@@ -16,8 +19,8 @@ class SeoModelService
             try {
                 $field = is_numeric($id) ? 'id' : 'slug';
                 $model = $namespace::where($field, $id)->first();
-            } catch (\Exception $e) {
-                \Log::error('Getting model item for seo api - ' . $e->getMessage());
+            } catch (Exception $e) {
+                Log::error('Getting model item for seo api - ' . $e->getMessage());
 
                 return null;
             }
@@ -30,13 +33,13 @@ class SeoModelService
 
     private function guessNamespaceByName(string $name): ?string
     {
-        $namespace = config("hexide-seo.custom_model_names.$name");
+        $namespace = config("hexide-seo.custom_model_names.{$name}");
 
         if ($namespace && class_exists($namespace)) {
             return $namespace;
         }
 
-        return $this->getNamespaceFromName(\Str::singular($name)) ?? $this->getNamespaceFromName(\Str::plural($name));
+        return $this->getNamespaceFromName(Str::singular($name)) ?? $this->getNamespaceFromName(Str::plural($name));
     }
 
     private function getNamespaceFromName(string $name): ?string
@@ -47,7 +50,7 @@ class SeoModelService
             '%s%s%s',
             Container::getInstance()->getNamespace(),
             $modelNamespace ? $modelNamespace . '\\' : '',
-            \Str::studly($name)
+            Str::studly($name)
         );
 
         return class_exists($namespace) ? $namespace : null;

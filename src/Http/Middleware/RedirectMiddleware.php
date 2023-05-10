@@ -7,17 +7,19 @@ namespace Hexide\Seo\Http\Middleware;
 use Closure;
 use Hexide\Seo\Models\RedirectRule;
 use Illuminate\Http\Request;
+use Cache;
+use Exception;
 
 class RedirectMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $rules = \Cache::remember('rules', config('hexide-seo.cache_ttl'), fn () => RedirectRule::all());
+        $rules = Cache::remember('rules', config('hexide-seo.cache_ttl'), fn () => RedirectRule::all());
 
         $path = $request->path();
 
         foreach ($rules as $rule) {
-            $pattern = "/$rule->rule/";
+            $pattern = "/{$rule->rule}/";
 
             try {
                 if (preg_match($pattern, $path)) {
@@ -25,7 +27,7 @@ class RedirectMiddleware
 
                     return redirect($newPath);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
 

@@ -10,6 +10,9 @@ use Hexide\Seo\Exceptions\MissingInterfaceException;
 use Hexide\Seo\Interfaces\XmlGenerator;
 use Hexide\Seo\Models\XmlSitemap;
 use Illuminate\Console\Command;
+use Exception;
+use Log;
+use File;
 
 class XmlGenerateCommand extends Command
 {
@@ -26,11 +29,11 @@ class XmlGenerateCommand extends Command
         if ($hasNewFiles) {
             try {
                 $this->generateMainSitemap();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $message = "XML Sitemap generation for general sitemap - " . $e->getMessage();
 
                 // if command was executed in cron, we have to log errors
-                \Log::error($message);
+                Log::error($message);
 
                 // in case command was executed manually
                 $this->error($message);
@@ -44,7 +47,6 @@ class XmlGenerateCommand extends Command
      */
     private function generateMainSitemap(): void
     {
-
         $files = $this->getFilesFromDirectory('public/sitemaps', url('sitemaps'));
 
         $text = view('seo::partials.sitemap', ['urls' => $files])->render();
@@ -55,7 +57,7 @@ class XmlGenerateCommand extends Command
     private function getFilesFromDirectory(string $scanPath, string $sitemapPath): array
     {
         $result = [];
-        $files = array_diff(scandir($scanPath), array('.', '..'));
+        $files = array_diff(scandir($scanPath), ['.', '..']);
         foreach ($files as $file) {
             if (is_dir($scanPath . '/' . $file)) {
                 $result = array_merge($result, $this->getFilesFromDirectory($scanPath . '/' . $file, $sitemapPath . '/' . $file));
@@ -74,16 +76,16 @@ class XmlGenerateCommand extends Command
         foreach ($sitemaps as $sitemap) {
             try {
                 if ($sitemap->needsUpdate()) {
-                    $path = "public/sitemaps/$sitemap->slug";
+                    $path = "public/sitemaps/{$sitemap->slug}";
                     $this->update($sitemap, $path);
                     $generated = true;
                     $sitemap->update(['generated_at' => now()]);
                 }
-            } catch (\Exception $e) {
-                $message = "XML Sitemap generation for $sitemap->slug - " . $e->getMessage();
+            } catch (Exception $e) {
+                $message = "XML Sitemap generation for {$sitemap->slug} - " . $e->getMessage();
 
                 // if command was executed in cron, we have to log errors
-                \Log::error($message);
+                Log::error($message);
 
                 // in case command was executed manually
                 $this->error($message);
@@ -103,14 +105,14 @@ class XmlGenerateCommand extends Command
         $generator = $sitemap->getGeneratorInstance();
 
         if (! in_array(XmlGenerator::class, class_implements($generator))) {
-            throw new MissingInterfaceException("Generator class $sitemap->generator missing XmlGenerator interface");
+            throw new MissingInterfaceException("Generator class {$sitemap->generator} missing XmlGenerator interface");
         }
 
         if (file_exists($globalPath)) {
-            \File::deleteDirectory($globalPath);
+            File::deleteDirectory($globalPath);
         }
 
-        \File::makeDirectory($globalPath, 0775, true, true);
+        File::makeDirectory($globalPath, 0775, true, true);
 
         $page = 0;
 
@@ -130,7 +132,7 @@ class XmlGenerateCommand extends Command
             ];
             $text = view('seo::partials.xml', $viewData)->render();
 
-            $this->writeToFile($text, "$globalPath/$page.xml");
+            $this->writeToFile($text, "{$globalPath}/{$page}.xml");
 
             $shouldContinue = $numOfData == config('hexide-seo.batch_size');
         } while ($shouldContinue);
@@ -145,14 +147,14 @@ class XmlGenerateCommand extends Command
         $stream = fopen($path, 'w');
 
         if (!$stream) {
-            throw new FailedToOpenFileException("Failed to open stream: $path");
+            throw new FailedToOpenFileException("Failed to open stream: {$path}");
         }
 
         $isWritten = fwrite($stream, $text);
         fclose($stream);
 
         if (! $isWritten) {
-            throw new FailedToWriteToFileException("Failed to write to file $path");
+            throw new FailedToWriteToFileException("Failed to write to file {$path}");
         }
     }
 }

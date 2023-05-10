@@ -32,7 +32,7 @@ class SeoHelper
 
     public function storeImage($image): bool|string
     {
-        $path = $this->preparePath('uploads' . '/' . 'images' . '/' . 'seo');
+        $path = $this->preparePath('uploads/images/seo');
 
         return Storage::disk('public')->putFile($path, new File($image->getPathname()));
     }
@@ -54,7 +54,7 @@ class SeoHelper
 
         $models = collect(\File::allFiles(app_path($path)))
             ->map(function ($item) use ($appNamespace, $modelNamespace) {
-                $rel   = $item->getRelativePathName();
+                $rel = $item->getRelativePathName();
                 $class = sprintf(
                     '%s%s%s',
                     $appNamespace,
@@ -94,7 +94,6 @@ class SeoHelper
     {
         return preg_replace('/\\s+/', ' ', $text);
     }
-
 
     private function preparePath(string $root): string
     {

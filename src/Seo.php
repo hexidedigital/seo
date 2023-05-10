@@ -8,6 +8,8 @@ use Exception;
 use Hexide\Seo\Models\GeneralMeta;
 use Hexide\Seo\Models\SeoTemplateModels;
 use Hexide\Seo\Services\SeoTemplateService;
+use SeoHelper;
+use Str;
 
 class Seo
 {
@@ -32,12 +34,12 @@ class Seo
         }
 
         return [
-            'title'          => $this->generalMeta?->title,
-            'description'    => $this->generalMeta?->description,
-            'keywords'       => $this->generalMeta?->keywords,
-            'og_title'       => $this->generalMeta?->og_title,
+            'title' => $this->generalMeta?->title,
+            'description' => $this->generalMeta?->description,
+            'keywords' => $this->generalMeta?->keywords,
+            'og_title' => $this->generalMeta?->og_title,
             'og_description' => $this->generalMeta?->og_description,
-            'og_image'       => $this->generalMeta?->og_image,
+            'og_image' => $this->generalMeta?->og_image,
         ];
     }
 
@@ -63,7 +65,7 @@ class Seo
 
     public function getMetaView(array $data = []): string
     {
-        return \SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => $this->getAllMeta($data)])->render());
+        return SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => $this->getAllMeta($data)])->render());
     }
 
     private function getMetaValue(string $field, bool $asHtml = false): ?string
@@ -138,7 +140,6 @@ class Seo
 
     public function getOgSiteNameAsHtml(): string
     {
-
         $view = view(
             'seo::partials._metadata',
             [
@@ -177,9 +178,7 @@ class Seo
         $url = explode('?', $url)[0] ?? '';
 
         // remove anchors
-        $url = explode('#', $url)[0] ?? '';
-
-        return $url;
+        return explode('#', $url)[0] ?? '';
     }
 
     public function getCanonicalUrlAsHtml(string $url): string
@@ -233,51 +232,53 @@ class Seo
 
     private function mergeUrl(array $parsed_url, string $path): string
     {
-        $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
 
-        $host     = $parsed_url['host'] ?? '';
+        $host = $parsed_url['host'] ?? '';
 
-        $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $port = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
 
-        $user     = $parsed_url['user'] ?? '';
+        $user = $parsed_url['user'] ?? '';
 
-        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
+        $pass = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
 
-        $pass     = ($user || $pass) ? "$pass@" : '';
+        $pass = ($user || $pass) ? "{$pass}@" : '';
 
-        $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+        $query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
 
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
 
-        return "$scheme$user$pass$host$port$path$query$fragment";
-
+        return "{$scheme}{$user}{$pass}{$host}{$port}{$path}{$query}{$fragment}";
     }
-
-
 
     public function getLocalizationMetaAsHtml(string $url): string
     {
         $view = view(
             'seo::partials._metadata',
             [
-                    'meta' => ['x_localization' => $this->getLocalizationMeta($url)],
-                ]
+                'meta' => ['x_localization' => $this->getLocalizationMeta($url)],
+            ]
         )->render();
 
         return \Hexide\Seo\Facades\SeoHelper::cleanSpaces($view);
     }
 
     /**
+     * @param mixed $method
+     * @param mixed $arguments
+     *
      * @throws Exception
      */
     public function __call($method, $arguments)
     {
         if (isset($this->{$method}) && is_callable($this->{$method})) {
             return call_user_func_array($this->{$method}, $arguments);
-        } elseif (str_starts_with($method, 'get')) {
+        }
+
+        if (str_starts_with($method, 'get')) {
             $asHtml = str_ends_with($method, 'AsHtml');
 
-            $field = \Str::snake(
+            $field = Str::snake(
                 str_replace(
                     'AsHtml',
                     '',

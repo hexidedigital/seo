@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class XmlSitemap extends Model
 {
-    public const FREQUENCY_30_MIN='30minutes';
-    public const FREQUENCY_HOUR='hour';
-    public const FREQUENCY_DAY='day';
-    public const FREQUENCY_WEEK='week';
-    public const FREQUENCY_MONTH='month';
+    public const FREQUENCY_30_MIN = '30minutes';
+    public const FREQUENCY_HOUR = 'hour';
+    public const FREQUENCY_DAY = 'day';
+    public const FREQUENCY_WEEK = 'week';
+    public const FREQUENCY_MONTH = 'month';
 
     public static array $changeFreqs = [
         'always',
@@ -45,10 +45,10 @@ class XmlSitemap extends Model
     {
         return [
             self::FREQUENCY_30_MIN => __('seo::labels.frequencies.' . self::FREQUENCY_30_MIN),
-            self::FREQUENCY_HOUR   => __('seo::labels.frequencies.' . self::FREQUENCY_HOUR),
-            self::FREQUENCY_DAY    => __('seo::labels.frequencies.' . self::FREQUENCY_DAY),
-            self::FREQUENCY_WEEK    => __('seo::labels.frequencies.' . self::FREQUENCY_WEEK),
-            self::FREQUENCY_MONTH  => __('seo::labels.frequencies.' . self::FREQUENCY_MONTH),
+            self::FREQUENCY_HOUR => __('seo::labels.frequencies.' . self::FREQUENCY_HOUR),
+            self::FREQUENCY_DAY => __('seo::labels.frequencies.' . self::FREQUENCY_DAY),
+            self::FREQUENCY_WEEK => __('seo::labels.frequencies.' . self::FREQUENCY_WEEK),
+            self::FREQUENCY_MONTH => __('seo::labels.frequencies.' . self::FREQUENCY_MONTH),
         ];
     }
 
@@ -56,7 +56,7 @@ class XmlSitemap extends Model
     {
         $generatorPath = str_replace('/', '\\', $this->generator);
 
-        return (new $generatorPath());
+        return new $generatorPath();
     }
 
     public function needsUpdate(): bool
@@ -82,7 +82,7 @@ class XmlSitemap extends Model
         $difference = $now->diffInMinutes($this->generated_at);
 
         // Convert frequency to minutes
-        $neededDifference = match($this->frequency) {
+        $neededDifference = match ($this->frequency) {
             self::FREQUENCY_30_MIN => 30,
             self::FREQUENCY_HOUR => 60,
             self::FREQUENCY_DAY => 1440,

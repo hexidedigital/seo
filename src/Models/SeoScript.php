@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeoScript extends Model
 {
-    public const TYPE_HEAD="head";
-    public const TYPE_BODY="body";
+    public const TYPE_HEAD = "head";
+    public const TYPE_BODY = "body";
 
     protected $fillable = [
         'title',
