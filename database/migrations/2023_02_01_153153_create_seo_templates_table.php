@@ -9,18 +9,16 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('seo_templates', function (Blueprint $table) {
+        Schema::create('seo_templates', function (Blueprint $table): void {
             $table->id();
             $table->string('group')->unique();
 
             $table->timestamps();
         });
-        Schema::create('seo_template_translations', function (Blueprint $table) {
+        Schema::create('seo_template_translations', function (Blueprint $table): void {
             $table->id();
             $table->string('locale')->index();
             $table->foreignId('seo_template_id');
@@ -40,10 +38,8 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('seo_template_translations');
         Schema::dropIfExists('seo_templates');

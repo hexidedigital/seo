@@ -23,6 +23,7 @@ class Controller extends BaseController
      * @var int
      */
     protected $statusCode = 200;
+
     /**
      * Illuminate\Http\Request instance.
      *
@@ -39,6 +40,7 @@ class Controller extends BaseController
     {
         return $this->statusCode;
     }
+
     /**
      * Setter for statusCode.
      *
@@ -49,6 +51,7 @@ class Controller extends BaseController
     protected function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
+
         return $this;
     }
 
@@ -81,6 +84,7 @@ class Controller extends BaseController
         if (! $message) {
             $message = __('admin_labels.not_found');
         }
+
         return $this->setStatusCode(404)->respondWithError($message);
     }
 

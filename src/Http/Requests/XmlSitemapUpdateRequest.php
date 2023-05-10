@@ -13,12 +13,13 @@ class XmlSitemapUpdateRequest extends FormRequest
     {
         $id = $this->route()->parameter('xml_sitemap')?->id;
         $freqs = implode(',', XmlSitemap::$changeFreqs);
+
         return [
             'slug' => ['required', 'string', 'max:191', 'unique:xml_sitemaps,slug,' . $id . ',id'],
             'name' => ['required', 'string', 'max:191'],
             'frequency' => ['required', 'string', 'max:191'],
             'priority' => ['nullable', 'numeric', 'min:0.01'],
-            'changefreq' => ['nullable', 'in:'.$freqs],
+            'changefreq' => ['nullable', 'in:' . $freqs],
             'generator' => ['required', 'string', 'max:191'],
             'path' => ['required', 'string', 'max:191'],
         ];

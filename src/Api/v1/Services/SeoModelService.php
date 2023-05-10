@@ -18,8 +18,10 @@ class SeoModelService
                 $model = $namespace::where($field, $id)->first();
             } catch (\Exception $e) {
                 \Log::error('Getting model item for seo api - ' . $e->getMessage());
+
                 return null;
             }
+
             return $model;
         }
 

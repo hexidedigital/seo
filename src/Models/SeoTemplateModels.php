@@ -11,7 +11,7 @@ class SeoTemplateModels extends Model
 {
     protected $fillable = [
         'seo_template_id',
-        'model_name'
+        'model_name',
     ];
 
     public function template(): BelongsTo

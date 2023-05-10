@@ -84,6 +84,7 @@ class Seo
             foreach (config('hexide-seo.additional_fields.' . $field, []) as $fieldName) {
                 if ($this->model->{$fieldName}) {
                     $value = $this->model->{$fieldName};
+
                     break;
                 }
             }
@@ -143,9 +144,10 @@ class Seo
             [
                 'meta' => [
                     'og_site_name' => $this->getOgSiteName(),
-                ]
+                ],
             ]
         )->render();
+
         return \Hexide\Seo\Facades\SeoHelper::cleanSpaces($view);
     }
 
@@ -162,7 +164,7 @@ class Seo
             [
                 'meta' => [
                     'og_url' => $this->getOgUrl($url),
-                ]
+                ],
             ]
         )->render();
 
@@ -187,7 +189,7 @@ class Seo
             [
                 'meta' => [
                     'canonical_url' => $this->getCanonicalUrl($url),
-                ]
+                ],
             ]
         )->render();
 

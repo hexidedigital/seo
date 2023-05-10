@@ -10,6 +10,6 @@ class SeoMicroformat extends Model
 {
     protected $fillable = [
         'title',
-        'text'
+        'text',
     ];
 }

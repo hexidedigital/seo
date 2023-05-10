@@ -18,20 +18,20 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['prefix' => 'templates'], function () {
+Route::group(['prefix' => 'templates'], function (): void {
     Route::get('{model_namespace}/{model_id}', [SeoTemplateController::class, 'modelMeta']);
 });
 
 Route::get('microformats/{model_namespace}/{model_id}/{format}', [SeoMicroformatController::class, 'show']);
 
-Route::group(['prefix' => 'analytics'], function () {
+Route::group(['prefix' => 'analytics'], function (): void {
     Route::get('gtm', [SeoAnalyticsController::class, 'showGtm']);
     Route::get('google-analytics', [SeoAnalyticsController::class, 'showGoogleAnalytics']);
     Route::get('meta-pixel', [SeoAnalyticsController::class, 'showMetaPixel']);
     Route::get('hotjar', [SeoAnalyticsController::class, 'showHotjar']);
 });
 
-Route::group(['prefix' => 'scripts'], function () {
+Route::group(['prefix' => 'scripts'], function (): void {
     Route::get('/', [SeoScriptsController::class, 'index']);
     Route::get('/{name}', [SeoScriptsController::class, 'show']);
 });

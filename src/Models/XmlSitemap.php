@@ -55,6 +55,7 @@ class XmlSitemap extends Model
     public function getGeneratorInstance()
     {
         $generatorPath = str_replace('/', '\\', $this->generator);
+
         return (new $generatorPath());
     }
 
@@ -86,7 +87,7 @@ class XmlSitemap extends Model
             self::FREQUENCY_HOUR => 60,
             self::FREQUENCY_DAY => 1440,
             self::FREQUENCY_WEEK => 10080,
-            default => INF, //If our frequency is wrong, we shouldn't generate anything
+            default => INF, // If our frequency is wrong, we shouldn't generate anything
         };
 
         return $difference >= $neededDifference;

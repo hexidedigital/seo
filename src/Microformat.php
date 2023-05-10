@@ -20,6 +20,7 @@ class Microformat
     public function for($model): self
     {
         $this->model = $model;
+
         return $this;
     }
 

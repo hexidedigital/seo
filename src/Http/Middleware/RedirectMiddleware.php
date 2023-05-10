@@ -18,9 +18,11 @@ class RedirectMiddleware
 
         foreach ($rules as $rule) {
             $pattern = "/$rule->rule/";
+
             try {
                 if (preg_match($pattern, $path)) {
                     $newPath = preg_replace($pattern, $rule->redirect_url, $path);
+
                     return redirect($newPath);
                 }
             } catch (\Exception $e) {

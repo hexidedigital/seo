@@ -8,8 +8,8 @@ return [
      */
     'routes' => [
         'web' => [
-            'middleware' => ['web', 'auth:web'], //default ['web', 'auth:web']
-            'prefix' => 'seo', //default seo
+            'middleware' => ['web', 'auth:web'], // default ['web', 'auth:web']
+            'prefix' => 'seo', // default seo
             'as' => 'seo.', // default seo.
         ],
         'api' => [
@@ -77,7 +77,7 @@ return [
         ],
         'og_image_title' => [
             'og_image_title',
-        ]
+        ],
     ],
 
     /*
@@ -87,6 +87,6 @@ return [
      */
     'variables' => [
         'prefix' => '{\\$',
-        'postfix' => '}'
+        'postfix' => '}',
     ],
 ];

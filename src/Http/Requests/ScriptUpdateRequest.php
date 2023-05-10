@@ -15,7 +15,7 @@ class ScriptUpdateRequest extends FormRequest
 
         return [
             'title' => ['required', 'string', 'max:191'],
-            'type' => ['required', 'string', 'in:'.$types],
+            'type' => ['required', 'string', 'in:' . $types],
             'text' => ['required', 'string', 'max:50000'],
         ];
     }

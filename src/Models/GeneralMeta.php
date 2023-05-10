@@ -35,7 +35,7 @@ class GeneralMeta extends Model
     {
         return $query->with(
             [
-                'translations' => function ($query) {
+                'translations' => function ($query): void {
                     $query->where('locale', app()->getLocale());
                 },
             ]
@@ -65,15 +65,15 @@ class GeneralMeta extends Model
         $singularModelTable = Str::singular($modelTable);
 
         if (!$translationsTable) {
-            $translationsTable = $singularModelTable."_translations";
+            $translationsTable = $singularModelTable . "_translations";
         }
 
-        $translationsTableKey = (empty($translationsTableKey) ? $singularModelTable."_id" : $translationsTableKey);
+        $translationsTableKey = (empty($translationsTableKey) ? $singularModelTable . "_id" : $translationsTableKey);
         $modelTableKey = (empty($modelTableKey) ? "id" : $modelTableKey);
 
         return $query->leftJoin(
             $translationsTable,
-            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey) {
+            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey): void {
                 $join->on("$translationsTable.$translationsTableKey", '=', "$modelTable.$modelTableKey")
                     ->where('locale', '=', app()->getLocale());
             }

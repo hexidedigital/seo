@@ -10,16 +10,14 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('general_metas', function (Blueprint $table) {
+        Schema::create('general_metas', function (Blueprint $table): void {
             $table->id();
             $table->timestamps();
         });
-        Schema::create('general_meta_translations', function (Blueprint $table) {
+        Schema::create('general_meta_translations', function (Blueprint $table): void {
             $table->id();
             $table->string('locale')->index();
             $table->foreignId('general_meta_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
@@ -39,10 +37,8 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('general_meta_translations');
         Schema::dropIfExists('general_metas');

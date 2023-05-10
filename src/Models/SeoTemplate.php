@@ -63,7 +63,7 @@ class SeoTemplate extends Model
 
         return $query->leftJoin(
             $translationsTable,
-            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey) {
+            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey): void {
                 $join->on("$translationsTable.$translationsTableKey", '=', "$modelTable.$modelTableKey")
                     ->where('locale', '=', app()->getLocale());
             }

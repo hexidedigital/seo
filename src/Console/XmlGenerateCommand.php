@@ -19,7 +19,7 @@ class XmlGenerateCommand extends Command
 
     private array $allowedMimeTypes = ['text/xml', 'application/xml'];
 
-    public function handle()
+    public function handle(): void
     {
         $hasNewFiles = $this->generateAdditionalSitemaps();
 
@@ -98,7 +98,7 @@ class XmlGenerateCommand extends Command
      * @throws FailedToWriteToFileException
      * @throws MissingInterfaceException
      */
-    private function update(XmlSitemap $sitemap, string $globalPath)
+    private function update(XmlSitemap $sitemap, string $globalPath): void
     {
         $generator = $sitemap->getGeneratorInstance();
 
@@ -140,7 +140,7 @@ class XmlGenerateCommand extends Command
      * @throws FailedToOpenFileException
      * @throws FailedToWriteToFileException
      */
-    private function writeToFile(string $text, string $path)
+    private function writeToFile(string $text, string $path): void
     {
         $stream = fopen($path, 'w');
 

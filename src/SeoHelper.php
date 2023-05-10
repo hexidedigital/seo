@@ -21,7 +21,7 @@ class SeoHelper
 
         if ($path) {
             if (!str_contains($path, 'http')) {
-                return str_contains($path, 'storage/') ? asset($path) : asset('storage/'.$path);
+                return str_contains($path, 'storage/') ? asset($path) : asset('storage/' . $path);
             }
 
             return $path;
@@ -32,7 +32,7 @@ class SeoHelper
 
     public function storeImage($image): bool|string
     {
-        $path = $this->preparePath('uploads'. '/' . 'images' . '/' . 'seo');
+        $path = $this->preparePath('uploads' . '/' . 'images' . '/' . 'seo');
 
         return Storage::disk('public')->putFile($path, new File($image->getPathname()));
     }
@@ -71,6 +71,7 @@ class SeoHelper
                         )
                     )
                 );
+
                 return class_exists($class) ? $class : null;
             })->filter();
 

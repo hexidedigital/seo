@@ -1,10 +1,43 @@
 {
   "preset": "per",
   "rules": {
-    "ordered_imports": true,
-      "class_definition": {
-          "inline_constructor_arguments": false,
-          "space_before_parenthesis": true
-      }
+    "trailing_comma_in_multiline": true,
+    "void_return": true,
+    "blank_line_before_statement": {
+      "statements": [
+        "break",
+        "case",
+        "continue",
+        "declare",
+        "default",
+        "exit",
+        "goto",
+        "include",
+        "include_once",
+        "phpdoc",
+        "require",
+        "require_once",
+        "return",
+        "switch",
+        "throw",
+        "try",
+        "yield",
+        "yield_from"
+      ]
+    },
+    "concat_space": {
+      "spacing": "one"
+    },
+    "multiline_whitespace_before_semicolons": {
+      "strategy": "no_multi_line"
+    },
+    "phpdoc_no_empty_return": true,
+    "phpdoc_trim": true,
+    "single_line_comment_spacing": true,
+    "single_line_comment_style": {
+      "comment_types": [
+        "hash"
+      ]
+    }
   }
 }

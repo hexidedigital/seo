@@ -16,6 +16,7 @@ class RedirectRuleController extends Controller
         $data = [
             'redirect_rules' => RedirectRule::all(),
         ];
+
         return view('seo::redirect_rules.index', $data);
     }
 
@@ -24,6 +25,7 @@ class RedirectRuleController extends Controller
         $data = [
             'model' => new RedirectRule(),
         ];
+
         return view('seo::redirect_rules.create', $data);
     }
 
@@ -41,6 +43,7 @@ class RedirectRuleController extends Controller
         $data = [
             'model' => $redirect_rule,
         ];
+
         return view('seo::redirect_rules.edit', $data);
     }
 

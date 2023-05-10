@@ -44,12 +44,14 @@ class Script
     public function asArray(): self
     {
         $this->isArray = true;
+
         return $this;
     }
 
     public function asText(): self
     {
         $this->isArray = false;
+
         return $this;
     }
 }

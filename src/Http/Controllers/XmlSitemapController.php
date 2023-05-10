@@ -16,6 +16,7 @@ class XmlSitemapController extends Controller
         $data = [
             'xml_sitemaps' => XmlSitemap::all(),
         ];
+
         return view('seo::xml_sitemaps.index', $data);
     }
 
@@ -26,6 +27,7 @@ class XmlSitemapController extends Controller
             'changeFreqs' => XmlSitemap::$changeFreqs,
             'model' => new XmlSitemap(),
         ];
+
         return view('seo::xml_sitemaps.create', $data);
     }
 
@@ -45,6 +47,7 @@ class XmlSitemapController extends Controller
             'changeFreqs' => XmlSitemap::$changeFreqs,
             'model' => $xml_sitemap,
         ];
+
         return view('seo::xml_sitemaps.edit', $data);
     }
 

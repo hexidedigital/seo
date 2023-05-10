@@ -12,6 +12,7 @@ class SeoAnalyticsController extends Controller
     public function edit()
     {
         $analytic = SeoAnalytic::firstOrCreate([]);
+
         return view('seo::seo_analytics.edit', ['model' => $analytic]);
     }
 

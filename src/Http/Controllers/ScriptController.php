@@ -16,6 +16,7 @@ class ScriptController extends Controller
         $data = [
             'scripts' => SeoScript::all(),
         ];
+
         return view('seo::scripts.index', $data);
     }
 
@@ -25,6 +26,7 @@ class ScriptController extends Controller
             'model' => new SeoScript(),
             'types' => SeoScript::getTypes(),
         ];
+
         return view('seo::scripts.create', $data);
     }
 
@@ -43,6 +45,7 @@ class ScriptController extends Controller
             'model' => $script,
             'types' => SeoScript::getTypes(),
         ];
+
         return view('seo::scripts.edit', $data);
     }
 
