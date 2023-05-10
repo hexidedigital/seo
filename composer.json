@@ -12,11 +12,19 @@
         "php": "^8.1",
         "ext-fileinfo": "*",
         "astrotomic/laravel-translatable": "^11.1",
-        "laravel/framework": "^8.0 ||^9.0 || ^10.0"
+        "laravel/framework": "^8.0 || ^9.0 || ^10.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.31"
     },
     "autoload": {
         "psr-4": {
             "Hexide\\Seo\\": "src"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
         }
     },
     "extra": {
