@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Astrotomic\Translatable\Validation\RuleFactory;
@@ -73,9 +75,7 @@ class SeoHelper
             })->filter();
 
         return $models->filter(
-            function ($model) {
-                return is_subclass_of($model, Model::class);
-            }
+            fn ($model) => is_subclass_of($model, Model::class)
         )->toArray();
     }
 

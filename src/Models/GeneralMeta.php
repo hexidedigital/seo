@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Models;
 
 use Astrotomic\Translatable\Translatable;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Requests;
 
 use Hexide\Seo\Facades\SeoHelper;

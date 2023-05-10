@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Hexide\Seo\Api\v1\Http\Controllers\SeoAnalyticsController;
 use Hexide\Seo\Api\v1\Http\Controllers\SeoMicroformatController;
 use Hexide\Seo\Api\v1\Http\Controllers\SeoScriptsController;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Services;
 
 use Hexide\Seo\Facades\SeoHelper;
@@ -19,9 +21,7 @@ class SeoTemplateService
     {
         $text = preg_replace_callback(
             $this->variableRegex,
-            function ($matches) use ($model) {
-                return $model?->{$matches[1]} ?? '';
-            },
+            fn ($matches) => $model?->{$matches[1]} ?? '',
             $text
         );
 

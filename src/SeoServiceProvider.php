@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Hexide\Seo\Console\XmlGenerateCommand;
@@ -51,9 +53,7 @@ class SeoServiceProvider extends ServiceProvider
 
     private function bindFacade(string $facadeName, $class)
     {
-        $this->app->bind($facadeName, function ($app) use ($class) {
-            return $class;
-        });
+        $this->app->bind($facadeName, fn ($app) => $class);
     }
 
     /**

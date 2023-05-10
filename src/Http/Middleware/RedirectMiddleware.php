@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Middleware;
 
 use Closure;
@@ -10,9 +12,7 @@ class RedirectMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $rules = \Cache::remember('rules', config('hexide-seo.cache_ttl'), function () {
-            return RedirectRule::all();
-        });
+        $rules = \Cache::remember('rules', config('hexide-seo.cache_ttl'), fn () => RedirectRule::all());
 
         $path = $request->path();
 

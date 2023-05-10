@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Api\v1\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
