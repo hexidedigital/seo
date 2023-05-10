@@ -87,8 +87,7 @@ class Seo
             }
         }
 
-        if ($field == 'og_image')
-        {
+        if ($field == 'og_image') {
             $value = \Hexide\Seo\Facades\SeoHelper::getFileUrl($value);
         }
 
@@ -137,7 +136,8 @@ class Seo
     public function getOgSiteNameAsHtml(): string
     {
 
-        $view = view('seo::partials._metadata',
+        $view = view(
+            'seo::partials._metadata',
             [
                 'meta' => [
                     'og_site_name' => $this->getOgSiteName(),
@@ -155,7 +155,8 @@ class Seo
 
     public function getOgUrlAsHtml(string $url): string
     {
-        $view = view('seo::partials._metadata',
+        $view = view(
+            'seo::partials._metadata',
             [
                 'meta' => [
                     'og_url' => $this->getOgUrl($url),
@@ -179,7 +180,8 @@ class Seo
 
     public function getCanonicalUrlAsHtml(string $url): string
     {
-        $view = view('seo::partials._metadata',
+        $view = view(
+            'seo::partials._metadata',
             [
                 'meta' => [
                     'canonical_url' => $this->getCanonicalUrl($url),
@@ -235,7 +237,7 @@ class Seo
 
         $user     = $parsed_url['user'] ?? '';
 
-        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
 
         $pass     = ($user || $pass) ? "$pass@" : '';
 
@@ -251,11 +253,12 @@ class Seo
 
     public function getLocalizationMetaAsHtml(string $url): string
     {
-        $view = view('seo::partials._metadata',
-                [
+        $view = view(
+            'seo::partials._metadata',
+            [
                     'meta' => ['x_localization' => $this->getLocalizationMeta($url)],
                 ]
-            )->render();
+        )->render();
 
         return \Hexide\Seo\Facades\SeoHelper::cleanSpaces($view);
     }

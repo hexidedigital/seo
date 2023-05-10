@@ -51,10 +51,10 @@ class GeneralMeta extends Model
      */
     public function scopeJoinTranslations(
         Builder $query,
-                $modelTable = null,
-                $translationsTable = null,
-                $modelTableKey = null,
-                $translationsTableKey = null
+        $modelTable = null,
+        $translationsTable = null,
+        $modelTableKey = null,
+        $translationsTableKey = null
     ) {
         if (!$modelTable) {
             $modelTable = $this->getTable();

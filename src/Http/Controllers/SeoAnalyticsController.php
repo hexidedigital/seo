@@ -7,7 +7,6 @@ use Hexide\Seo\Models\SeoAnalytic;
 
 class SeoAnalyticsController extends Controller
 {
-
     public function edit()
     {
         $analytic = SeoAnalytic::firstOrCreate([]);

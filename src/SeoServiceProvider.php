@@ -3,9 +3,9 @@
 namespace Hexide\Seo;
 
 use Hexide\Seo\Console\XmlGenerateCommand;
+use Hexide\Seo\Http\Middleware\RedirectMiddleware;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Http\Kernel;
-use Hexide\Seo\Http\Middleware\RedirectMiddleware;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -51,7 +51,7 @@ class SeoServiceProvider extends ServiceProvider
 
     private function bindFacade(string $facadeName, $class)
     {
-        $this->app->bind($facadeName, function ($app) use ($class){
+        $this->app->bind($facadeName, function ($app) use ($class) {
             return $class;
         });
     }

@@ -54,7 +54,9 @@ class SeoHelper
             ->map(function ($item) use ($appNamespace, $modelNamespace) {
                 $rel   = $item->getRelativePathName();
                 $class = sprintf(
-                    '%s%s%s', $appNamespace, $modelNamespace ? $modelNamespace . '\\' : '',
+                    '%s%s%s',
+                    $appNamespace,
+                    $modelNamespace ? $modelNamespace . '\\' : '',
                     implode(
                         '\\',
                         explode(

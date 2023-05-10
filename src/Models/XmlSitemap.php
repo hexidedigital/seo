@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class XmlSitemap extends Model
 {
-    const FREQUENCY_30_MIN='30minutes';
-    const FREQUENCY_HOUR='hour';
-    const FREQUENCY_DAY='day';
-    const FREQUENCY_WEEK='week';
-    const FREQUENCY_MONTH='month';
+    public const FREQUENCY_30_MIN='30minutes';
+    public const FREQUENCY_HOUR='hour';
+    public const FREQUENCY_DAY='day';
+    public const FREQUENCY_WEEK='week';
+    public const FREQUENCY_MONTH='month';
 
     public static array $changeFreqs = [
         'always',

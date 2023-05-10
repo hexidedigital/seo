@@ -18,12 +18,12 @@ class SeoTemplateService
     public function getText(string $text, $model): string
     {
         $text = preg_replace_callback(
-                    $this->variableRegex,
-                    function ($matches) use ($model) {
-                        return $model?->{$matches[1]} ?? '';
-                    },
-                    $text
-                );
+            $this->variableRegex,
+            function ($matches) use ($model) {
+                return $model?->{$matches[1]} ?? '';
+            },
+            $text
+        );
 
         $text = SeoHelper::cleanSpaces($text);
 

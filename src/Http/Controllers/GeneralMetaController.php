@@ -8,7 +8,6 @@ use Hexide\Seo\Models\GeneralMeta;
 
 class GeneralMetaController extends Controller
 {
-
     public function edit()
     {
         $generalMeta = GeneralMeta::firstOrCreate([]);
@@ -19,8 +18,7 @@ class GeneralMetaController extends Controller
     {
         $generalMeta = GeneralMeta::firstOrCreate([]);
         $data = $request->safe()->except('og_image', 'isRemoveImage');
-        foreach (config('translatable.locales') as $locale)
-        {
+        foreach (config('translatable.locales') as $locale) {
             if ($request->hasFile($locale.'.og_image')) {
                 $data[$locale]['og_image'] = SeoHelper::storeImage($request->file($locale.'.og_image'));
                 SeoHelper::deleteImage($generalMeta->translate($locale)?->og_image);

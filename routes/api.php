@@ -2,8 +2,8 @@
 
 use Hexide\Seo\Api\v1\Http\Controllers\SeoAnalyticsController;
 use Hexide\Seo\Api\v1\Http\Controllers\SeoMicroformatController;
-use Hexide\Seo\Api\v1\Http\Controllers\SeoTemplateController;
 use Hexide\Seo\Api\v1\Http\Controllers\SeoScriptsController;
+use Hexide\Seo\Api\v1\Http\Controllers\SeoTemplateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +22,7 @@ Route::group(['prefix' => 'templates'], function () {
 
 Route::get('microformats/{model_namespace}/{model_id}/{format}', [SeoMicroformatController::class, 'show']);
 
-Route::group(['prefix' => 'analytics'], function() {
+Route::group(['prefix' => 'analytics'], function () {
     Route::get('gtm', [SeoAnalyticsController::class, 'showGtm']);
     Route::get('google-analytics', [SeoAnalyticsController::class, 'showGoogleAnalytics']);
     Route::get('meta-pixel', [SeoAnalyticsController::class, 'showMetaPixel']);

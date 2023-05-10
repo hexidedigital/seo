@@ -61,8 +61,7 @@ class SeoTemplateController extends Controller
 
         $models = $request->get('models', []);
 
-        foreach (config('translatable.locales') as $locale)
-        {
+        foreach (config('translatable.locales') as $locale) {
             if ($request->hasFile($locale.'.og_image')) {
                 $data[$locale]['og_image'] = SeoHelper::storeImage($request->file($locale.'.og_image'));
                 SeoHelper::deleteImage($template->translate($locale)?->og_image);

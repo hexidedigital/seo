@@ -40,7 +40,9 @@ class SeoModelService
         $modelNamespace = config('hexide-seo.model_namespace') ?? 'Models';
 
         $namespace = sprintf(
-            '%s%s%s', Container::getInstance()->getNamespace(), $modelNamespace ? $modelNamespace . '\\' : '',
+            '%s%s%s',
+            Container::getInstance()->getNamespace(),
+            $modelNamespace ? $modelNamespace . '\\' : '',
             \Str::studly($name)
         );
 
