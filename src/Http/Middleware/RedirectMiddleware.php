@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Hexide\Seo\Http\Middleware;
 
 use Closure;
+use Exception;
 use Hexide\Seo\Models\RedirectRule;
 use Illuminate\Http\Request;
-use Cache;
-use Exception;
+use Illuminate\Support\Facades\Cache;
 
 class RedirectMiddleware
 {

@@ -47,13 +47,13 @@ class SeoTemplate extends Model
         $modelTableKey = null,
         $translationsTableKey = null
     ) {
-        if (! $modelTable) {
+        if (!$modelTable) {
             $modelTable = $this->getTable();
         }
 
         $singularModelTable = Str::singular($modelTable);
 
-        if (! $translationsTable) {
+        if (!$translationsTable) {
             $translationsTable = $singularModelTable . "_translations";
         }
 

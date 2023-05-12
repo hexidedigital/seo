@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Hexide\Seo;
 
 use Exception;
+use Hexide\Seo\Facades\SeoHelper;
 use Hexide\Seo\Models\GeneralMeta;
 use Hexide\Seo\Models\SeoTemplateModels;
 use Hexide\Seo\Services\SeoTemplateService;
-use SeoHelper;
-use Str;
+use Illuminate\Support\Str;
 
 class Seo
 {
@@ -25,7 +25,7 @@ class Seo
 
     public function getGeneralMeta(?string $field = null): array|string|null
     {
-        if (! $this->generalMeta) {
+        if (!$this->generalMeta) {
             $this->generalMeta = GeneralMeta::withTranslation()->firstOrCreate([]);
         }
 
@@ -203,7 +203,7 @@ class Seo
 
         $path = $parsedUrl['path'] ?? null;
 
-        if (! $path) {
+        if (!$path) {
             return $data;
         }
 

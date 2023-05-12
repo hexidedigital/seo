@@ -81,7 +81,7 @@ class Controller extends BaseController
      */
     protected function errorNotFound($message = null)
     {
-        if (! $message) {
+        if (!$message) {
             $message = __('admin_labels.not_found');
         }
 

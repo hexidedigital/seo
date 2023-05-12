@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Hexide\Seo\Console;
 
+use Exception;
 use Hexide\Seo\Exceptions\FailedToOpenFileException;
 use Hexide\Seo\Exceptions\FailedToWriteToFileException;
 use Hexide\Seo\Exceptions\MissingInterfaceException;
 use Hexide\Seo\Interfaces\XmlGenerator;
 use Hexide\Seo\Models\XmlSitemap;
 use Illuminate\Console\Command;
-use Exception;
-use Log;
-use File;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class XmlGenerateCommand extends Command
 {
@@ -60,7 +60,10 @@ class XmlGenerateCommand extends Command
         $files = array_diff(scandir($scanPath), ['.', '..']);
         foreach ($files as $file) {
             if (is_dir($scanPath . '/' . $file)) {
-                $result = array_merge($result, $this->getFilesFromDirectory($scanPath . '/' . $file, $sitemapPath . '/' . $file));
+                $result = array_merge(
+                    $result,
+                    $this->getFilesFromDirectory($scanPath . '/' . $file, $sitemapPath . '/' . $file)
+                );
             } elseif (in_array(mime_content_type($scanPath . '/' . $file), $this->allowedMimeTypes)) {
                 $result[] = $sitemapPath . '/' . $file;
             }
@@ -104,7 +107,7 @@ class XmlGenerateCommand extends Command
     {
         $generator = $sitemap->getGeneratorInstance();
 
-        if (! in_array(XmlGenerator::class, class_implements($generator))) {
+        if (!in_array(XmlGenerator::class, class_implements($generator))) {
             throw new MissingInterfaceException("Generator class {$sitemap->generator} missing XmlGenerator interface");
         }
 
@@ -153,7 +156,7 @@ class XmlGenerateCommand extends Command
         $isWritten = fwrite($stream, $text);
         fclose($stream);
 
-        if (! $isWritten) {
+        if (!$isWritten) {
             throw new FailedToWriteToFileException("Failed to write to file {$path}");
         }
     }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Hexide\Seo\Api\v1\Services;
 
-use Illuminate\Container\Container;
 use Exception;
-use Log;
-use Str;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class SeoModelService
 {

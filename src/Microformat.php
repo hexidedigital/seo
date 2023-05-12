@@ -28,7 +28,7 @@ class Microformat
     {
         $format = SeoMicroformat::where('title', $formatName)->first();
 
-        if (! $format) {
+        if (!$format) {
             return null;
         }
 
