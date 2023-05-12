@@ -242,9 +242,7 @@
             "only_booleans": true
         },
         "php_unit_fqcn_annotation": true,
-        "php_unit_internal_class": true,
         "php_unit_method_casing": true,
-        "php_unit_test_class_requires_covers": true,
         "phpdoc_add_missing_param_annotation": true,
         "phpdoc_align": true,
         "phpdoc_annotation_without_dot": true,
