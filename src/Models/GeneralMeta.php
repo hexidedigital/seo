@@ -40,10 +40,10 @@ class GeneralMeta extends Model
     }
 
     /**
-     * @param null|string $modelTable
-     * @param null|string $translationsTable
-     * @param null|string $modelTableKey
-     * @param null|string $translationsTableKey
+     * @param string|null $modelTable
+     * @param string|null $translationsTable
+     * @param string|null $modelTableKey
+     * @param string|null $translationsTableKey
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
