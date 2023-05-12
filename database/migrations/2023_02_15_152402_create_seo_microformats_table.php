@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('seo_microformats', function (Blueprint $table): void {
+        Schema::create('seo_microformats', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
             $table->longText('text')->nullable();

@@ -13,7 +13,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('seo_analytics', function (Blueprint $table): void {
+        Schema::create('seo_analytics', function (Blueprint $table) {
             $table->id();
             $table->string('gtm_id')->nullable();
             $table->string('ga_tracking_id')->nullable();

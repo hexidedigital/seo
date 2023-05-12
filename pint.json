@@ -100,7 +100,7 @@
             ]
         },
         "use_arrow_functions": true,
-        "void_return": true,
+        "void_return": false,
         "clean_namespace": true,
         "no_unset_cast": true,
         "no_trailing_whitespace_in_string": true,

@@ -55,6 +55,6 @@
         "post-autoload-dump": [
             "@php ./vendor/bin/testbench package:discover --ansi"
         ],
-        "lint": "./vendor/bin/pint src routes database tests"
+        "lint": "./vendor/bin/pint src tests"
     }
 }

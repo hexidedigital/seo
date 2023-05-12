@@ -13,7 +13,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('seo_scripts', function (Blueprint $table): void {
+        Schema::create('seo_scripts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('type')->default(SeoScript::TYPE_HEAD);

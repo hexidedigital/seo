@@ -108,10 +108,10 @@ class SeoServiceProvider extends ServiceProvider
 
     private function registerRoutes(): void
     {
-        Route::group($this->routeConfiguration('web'), function (): void {
+        Route::group($this->routeConfiguration('web'), function () {
             $this->loadRoutesFrom($this->packagePath('routes/web.php'));
         });
-        Route::group($this->routeConfiguration('api'), function (): void {
+        Route::group($this->routeConfiguration('api'), function () {
             $this->loadRoutesFrom($this->packagePath('routes/api.php'));
         });
     }

@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('xml_sitemaps', function (Blueprint $table): void {
+        Schema::create('xml_sitemaps', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->index();
             $table->string('name');

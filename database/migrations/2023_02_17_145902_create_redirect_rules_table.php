@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('redirect_rules', function (Blueprint $table): void {
+        Schema::create('redirect_rules', function (Blueprint $table) {
             $table->id();
             $table->text('rule');
             $table->string('redirect_url');

@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('seo_template_models', function (Blueprint $table): void {
+        Schema::create('seo_template_models', function (Blueprint $table) {
             $table->id();
             $table->foreignId('seo_template_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('model_name')->unique();

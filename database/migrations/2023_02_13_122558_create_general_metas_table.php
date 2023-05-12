@@ -13,11 +13,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('general_metas', function (Blueprint $table): void {
+        Schema::create('general_metas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
-        Schema::create('general_meta_translations', function (Blueprint $table): void {
+        Schema::create('general_meta_translations', function (Blueprint $table) {
             $table->id();
             $table->string('locale')->index();
             $table->foreignId('general_meta_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();

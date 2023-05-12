@@ -12,13 +12,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('seo_templates', function (Blueprint $table): void {
+        Schema::create('seo_templates', function (Blueprint $table) {
             $table->id();
             $table->string('group')->unique();
 
             $table->timestamps();
         });
-        Schema::create('seo_template_translations', function (Blueprint $table): void {
+        Schema::create('seo_template_translations', function (Blueprint $table) {
             $table->id();
             $table->string('locale')->index();
             $table->foreignId('seo_template_id');
