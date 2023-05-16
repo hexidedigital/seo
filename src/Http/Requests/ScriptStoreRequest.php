@@ -6,16 +6,15 @@ namespace Hexide\Seo\Http\Requests;
 
 use Hexide\Seo\Models\SeoScript;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ScriptStoreRequest extends FormRequest
 {
     public function rules(): array
     {
-        $types = implode(',', SeoScript::getTypes());
-
         return [
-            'title' => ['required', 'string', 'max:191'],
-            'type' => ['required', 'string', 'in:' . $types],
+            'title' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', Rule::in(SeoScript::getTypes())],
             'text' => ['required', 'string', 'max:50000'],
         ];
     }

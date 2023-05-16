@@ -12,7 +12,7 @@ class RedirectRuleStoreRequest extends FormRequest
     {
         return [
             'rule' => ['required', 'string', 'max:5000'],
-            'redirect_url' => ['required', 'string', 'max:191'],
+            'redirect_url' => ['required', 'string', 'max:255'],
         ];
     }
 }
