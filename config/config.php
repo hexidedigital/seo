@@ -22,6 +22,7 @@ return [
     /*
      * Lifetime for cached data in RedirectMiddleware
      * In seconds
+     * Set 0, to disable caching
      *
      * Default 300
      */
@@ -86,7 +87,7 @@ return [
      *
      */
     'variables' => [
-        'prefix' => '{\\$',
+        'prefix' => '{',
         'postfix' => '}',
     ],
 ];
