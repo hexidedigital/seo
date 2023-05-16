@@ -39,8 +39,6 @@ class SeoServiceProvider extends ServiceProvider
 
         $this->bindFacade('microformat', new Microformat());
 
-        $this->bindFacade('analytics', new SeoAnalytic());
-
         $this->bindFacade('scripts', new Script());
     }
 

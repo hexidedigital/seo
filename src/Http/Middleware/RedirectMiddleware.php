@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\Cache;
 
 class RedirectMiddleware
 {
+    protected string $cacheKey = 'rules';
+
     public function handle(Request $request, Closure $next)
     {
-        $rules = Cache::remember('rules', config('hexide-seo.cache_ttl'), fn () => RedirectRule::all());
-
         $path = $request->path();
 
-        foreach ($rules as $rule) {
+        foreach ($this->getRules() as $rule) {
             $pattern = "/{$rule->rule}/";
 
             try {
@@ -32,5 +32,14 @@ class RedirectMiddleware
         }
 
         return $next($request);
+    }
+
+    protected function getRules(): mixed
+    {
+        return Cache::remember(
+            $this->cacheKey,
+            config('hexide-seo.cache_ttl'),
+            fn () => RedirectRule::all()
+        );
     }
 }

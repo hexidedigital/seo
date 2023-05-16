@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
-use Hexide\Seo\Http\Requests\RedirectRuleStoreRequest;
-use Hexide\Seo\Http\Requests\RedirectRuleUpdateRequest;
+use Hexide\Seo\Http\Requests\RedirectRule\RedirectRuleStoreRequest;
+use Hexide\Seo\Http\Requests\RedirectRule\RedirectRuleUpdateRequest;
 use Hexide\Seo\Models\RedirectRule;
 
 class RedirectRuleController extends Controller

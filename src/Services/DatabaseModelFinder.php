@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hexide\Seo\Api\v1\Services;
+namespace Hexide\Seo\Services;
 
 use Exception;
 use Illuminate\Container\Container;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class SeoModelService
+class DatabaseModelFinder
 {
     public function findModel(string $modelName, string|int $identity): ?Model
     {
