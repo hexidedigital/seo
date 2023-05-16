@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Services;
 
 use Hexide\Seo\Facades\SeoHelper;
 
 class SeoTemplateService
 {
-    private $variableRegex;
+    private string $variableRegex;
 
     public function __construct()
     {
@@ -18,15 +20,11 @@ class SeoTemplateService
     public function getText(string $text, $model): string
     {
         $text = preg_replace_callback(
-                    $this->variableRegex,
-                    function ($matches) use ($model) {
-                        return $model?->{$matches[1]} ?? '';
-                    },
-                    $text
-                );
+            $this->variableRegex,
+            fn ($matches) => $model?->{$matches[1]} ?? '',
+            $text
+        );
 
-        $text = SeoHelper::cleanSpaces($text);
-
-        return $text;
+        return SeoHelper::cleanSpaces($text);
     }
 }

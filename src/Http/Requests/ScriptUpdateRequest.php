@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Requests;
 
 use Hexide\Seo\Models\SeoScript;
@@ -13,7 +15,7 @@ class ScriptUpdateRequest extends FormRequest
 
         return [
             'title' => ['required', 'string', 'max:191'],
-            'type' => ['required', 'string', 'in:'.$types],
+            'type' => ['required', 'string', 'in:' . $types],
             'text' => ['required', 'string', 'max:50000'],
         ];
     }

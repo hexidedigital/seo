@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
@@ -14,6 +16,7 @@ class ScriptController extends Controller
         $data = [
             'scripts' => SeoScript::all(),
         ];
+
         return view('seo::scripts.index', $data);
     }
 
@@ -23,6 +26,7 @@ class ScriptController extends Controller
             'model' => new SeoScript(),
             'types' => SeoScript::getTypes(),
         ];
+
         return view('seo::scripts.create', $data);
     }
 
@@ -41,6 +45,7 @@ class ScriptController extends Controller
             'model' => $script,
             'types' => SeoScript::getTypes(),
         ];
+
         return view('seo::scripts.edit', $data);
     }
 

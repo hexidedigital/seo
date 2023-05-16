@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Hexide\Seo\Models\SeoScript;
@@ -42,12 +44,14 @@ class Script
     public function asArray(): self
     {
         $this->isArray = true;
+
         return $this;
     }
 
     public function asText(): self
     {
         $this->isArray = false;
+
         return $this;
     }
 }

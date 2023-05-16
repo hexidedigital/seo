@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Hexide\Seo\Models\SeoMicroformat;
@@ -10,7 +12,7 @@ class Microformat
     private SeoTemplateService $templateService;
     private $model;
 
-    public function __construct($model = null)
+    public function __construct( $model = null)
     {
         $this->templateService = new SeoTemplateService();
     }
@@ -18,6 +20,7 @@ class Microformat
     public function for($model): self
     {
         $this->model = $model;
+
         return $this;
     }
 
@@ -25,7 +28,7 @@ class Microformat
     {
         $format = SeoMicroformat::where('title', $formatName)->first();
 
-        if (! $format) {
+        if (!$format) {
             return null;
         }
 

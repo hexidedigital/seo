@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Models;
 
 use Astrotomic\Translatable\Translatable;
@@ -23,17 +25,14 @@ class GeneralMeta extends Model
 
     protected $fillable = [];
 
-
     /**
-     * @param Builder $query
-     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithTranslations(Builder $query)
     {
         return $query->with(
             [
-                'translations' => function ($query) {
+                'translations' => function ($query): void {
                     $query->where('locale', app()->getLocale());
                 },
             ]
@@ -41,7 +40,6 @@ class GeneralMeta extends Model
     }
 
     /**
-     * @param             $query
      * @param string|null $modelTable
      * @param string|null $translationsTable
      * @param string|null $modelTableKey
@@ -51,10 +49,10 @@ class GeneralMeta extends Model
      */
     public function scopeJoinTranslations(
         Builder $query,
-                $modelTable = null,
-                $translationsTable = null,
-                $modelTableKey = null,
-                $translationsTableKey = null
+        $modelTable = null,
+        $translationsTable = null,
+        $modelTableKey = null,
+        $translationsTableKey = null
     ) {
         if (!$modelTable) {
             $modelTable = $this->getTable();
@@ -63,16 +61,16 @@ class GeneralMeta extends Model
         $singularModelTable = Str::singular($modelTable);
 
         if (!$translationsTable) {
-            $translationsTable = $singularModelTable."_translations";
+            $translationsTable = $singularModelTable . "_translations";
         }
 
-        $translationsTableKey = (empty($translationsTableKey) ? $singularModelTable."_id" : $translationsTableKey);
+        $translationsTableKey = (empty($translationsTableKey) ? $singularModelTable . "_id" : $translationsTableKey);
         $modelTableKey = (empty($modelTableKey) ? "id" : $modelTableKey);
 
         return $query->leftJoin(
             $translationsTable,
-            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey) {
-                $join->on("$translationsTable.$translationsTableKey", '=', "$modelTable.$modelTableKey")
+            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey): void {
+                $join->on("{$translationsTable}.{$translationsTableKey}", '=', "{$modelTable}.{$modelTableKey}")
                     ->where('locale', '=', app()->getLocale());
             }
         );

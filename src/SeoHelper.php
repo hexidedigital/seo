@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Astrotomic\Translatable\Validation\RuleFactory;
@@ -19,7 +21,7 @@ class SeoHelper
 
         if ($path) {
             if (!str_contains($path, 'http')) {
-                return str_contains($path, 'storage/') ? asset($path) : asset('storage/'.$path);
+                return str_contains($path, 'storage/') ? asset($path) : asset('storage/' . $path);
             }
 
             return $path;
@@ -30,7 +32,7 @@ class SeoHelper
 
     public function storeImage($image): bool|string
     {
-        $path = $this->preparePath('uploads'. '/' . 'images' . '/' . 'seo');
+        $path = $this->preparePath('uploads/images/seo');
 
         return Storage::disk('public')->putFile($path, new File($image->getPathname()));
     }
@@ -52,9 +54,11 @@ class SeoHelper
 
         $models = collect(\File::allFiles(app_path($path)))
             ->map(function ($item) use ($appNamespace, $modelNamespace) {
-                $rel   = $item->getRelativePathName();
+                $rel = $item->getRelativePathName();
                 $class = sprintf(
-                    '%s%s%s', $appNamespace, $modelNamespace ? $modelNamespace . '\\' : '',
+                    '%s%s%s',
+                    $appNamespace,
+                    $modelNamespace ? $modelNamespace . '\\' : '',
                     implode(
                         '\\',
                         explode(
@@ -67,13 +71,12 @@ class SeoHelper
                         )
                     )
                 );
+
                 return class_exists($class) ? $class : null;
             })->filter();
 
         return $models->filter(
-            function ($model) {
-                return is_subclass_of($model, Model::class);
-            }
+            fn ($model) => is_subclass_of($model, Model::class)
         )->toArray();
     }
 
@@ -91,7 +94,6 @@ class SeoHelper
     {
         return preg_replace('/\\s+/', ' ', $text);
     }
-
 
     private function preparePath(string $root): string
     {

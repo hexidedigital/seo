@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Exception;
+use Hexide\Seo\Facades\SeoHelper;
 use Hexide\Seo\Models\GeneralMeta;
 use Hexide\Seo\Models\SeoTemplateModels;
 use Hexide\Seo\Services\SeoTemplateService;
+use Illuminate\Support\Str;
 
 class Seo
 {
-    private mixed $model;
-    private SeoTemplateService $templateService;
-    private ?GeneralMeta $generalMeta = null;
+    protected mixed $model;
+    protected SeoTemplateService $templateService;
+    protected ?GeneralMeta $generalMeta = null;
 
     public function __construct($model = null)
     {
@@ -21,7 +25,7 @@ class Seo
 
     public function getGeneralMeta(?string $field = null): array|string|null
     {
-        if (! $this->generalMeta) {
+        if (!$this->generalMeta) {
             $this->generalMeta = GeneralMeta::withTranslation()->firstOrCreate([]);
         }
 
@@ -30,12 +34,12 @@ class Seo
         }
 
         return [
-            'title'          => $this->generalMeta?->title,
-            'description'    => $this->generalMeta?->description,
-            'keywords'       => $this->generalMeta?->keywords,
-            'og_title'       => $this->generalMeta?->og_title,
+            'title' => $this->generalMeta?->title,
+            'description' => $this->generalMeta?->description,
+            'keywords' => $this->generalMeta?->keywords,
+            'og_title' => $this->generalMeta?->og_title,
             'og_description' => $this->generalMeta?->og_description,
-            'og_image'       => $this->generalMeta?->og_image,
+            'og_image' => $this->generalMeta?->og_image,
         ];
     }
 
@@ -61,10 +65,10 @@ class Seo
 
     public function getMetaView(array $data = []): string
     {
-        return \SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => $this->getAllMeta($data)])->render());
+        return SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => $this->getAllMeta($data)])->render());
     }
 
-    private function getMetaValue(string $field, bool $asHtml = false): ?string
+    protected function getMetaValue(string $field, bool $asHtml = false): ?string
     {
         $value = null;
 
@@ -82,24 +86,26 @@ class Seo
             foreach (config('hexide-seo.additional_fields.' . $field, []) as $fieldName) {
                 if ($this->model->{$fieldName}) {
                     $value = $this->model->{$fieldName};
+
                     break;
                 }
             }
         }
 
-        if ($field == 'og_image')
-        {
+        if ($field == 'og_image') {
             $value = \Hexide\Seo\Facades\SeoHelper::getFileUrl($value);
         }
 
         if ($asHtml && $value) {
-            return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => [$field => $value]])->render());
+            return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(
+                view('seo::partials._metadata', ['meta' => [$field => $value]])->render()
+            );
         }
 
         return $value;
     }
 
-    private function getMetaFromModel(string $field): ?string
+    protected function getMetaFromModel(string $field): ?string
     {
         $value = $this->model?->{$field};
 
@@ -136,14 +142,15 @@ class Seo
 
     public function getOgSiteNameAsHtml(): string
     {
-
-        $view = view('seo::partials._metadata',
+        $view = view(
+            'seo::partials._metadata',
             [
                 'meta' => [
                     'og_site_name' => $this->getOgSiteName(),
-                ]
+                ],
             ]
         )->render();
+
         return \Hexide\Seo\Facades\SeoHelper::cleanSpaces($view);
     }
 
@@ -155,11 +162,12 @@ class Seo
 
     public function getOgUrlAsHtml(string $url): string
     {
-        $view = view('seo::partials._metadata',
+        $view = view(
+            'seo::partials._metadata',
             [
                 'meta' => [
                     'og_url' => $this->getOgUrl($url),
-                ]
+                ],
             ]
         )->render();
 
@@ -172,18 +180,17 @@ class Seo
         $url = explode('?', $url)[0] ?? '';
 
         // remove anchors
-        $url = explode('#', $url)[0] ?? '';
-
-        return $url;
+        return explode('#', $url)[0] ?? '';
     }
 
     public function getCanonicalUrlAsHtml(string $url): string
     {
-        $view = view('seo::partials._metadata',
+        $view = view(
+            'seo::partials._metadata',
             [
                 'meta' => [
                     'canonical_url' => $this->getCanonicalUrl($url),
-                ]
+                ],
             ]
         )->render();
 
@@ -198,7 +205,7 @@ class Seo
 
         $path = $parsedUrl['path'] ?? null;
 
-        if (! $path) {
+        if (!$path) {
             return $data;
         }
 
@@ -225,52 +232,55 @@ class Seo
         return $data;
     }
 
-    private function mergeUrl(array $parsed_url, string $path): string
+    protected function mergeUrl(array $parsed_url, string $path): string
     {
-        $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
+        $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
 
-        $host     = $parsed_url['host'] ?? '';
+        $host = $parsed_url['host'] ?? '';
 
-        $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
+        $port = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
 
-        $user     = $parsed_url['user'] ?? '';
+        $user = $parsed_url['user'] ?? '';
 
-        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+        $pass = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
 
-        $pass     = ($user || $pass) ? "$pass@" : '';
+        $pass = ($user || $pass) ? "{$pass}@" : '';
 
-        $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+        $query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
 
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
 
-        return "$scheme$user$pass$host$port$path$query$fragment";
-
+        return "{$scheme}{$user}{$pass}{$host}{$port}{$path}{$query}{$fragment}";
     }
-
-
 
     public function getLocalizationMetaAsHtml(string $url): string
     {
-        $view = view('seo::partials._metadata',
-                [
-                    'meta' => ['x_localization' => $this->getLocalizationMeta($url)],
-                ]
-            )->render();
+        $view = view(
+            'seo::partials._metadata',
+            [
+                'meta' => ['x_localization' => $this->getLocalizationMeta($url)],
+            ]
+        )->render();
 
         return \Hexide\Seo\Facades\SeoHelper::cleanSpaces($view);
     }
 
     /**
+     * @param mixed $method
+     * @param mixed $arguments
+     *
      * @throws Exception
      */
     public function __call($method, $arguments)
     {
         if (isset($this->{$method}) && is_callable($this->{$method})) {
             return call_user_func_array($this->{$method}, $arguments);
-        } elseif (str_starts_with($method, 'get')) {
+        }
+
+        if (str_starts_with($method, 'get')) {
             $asHtml = str_ends_with($method, 'AsHtml');
 
-            $field = \Str::snake(
+            $field = Str::snake(
                 str_replace(
                     'AsHtml',
                     '',

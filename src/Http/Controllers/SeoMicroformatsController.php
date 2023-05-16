@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
@@ -14,6 +16,7 @@ class SeoMicroformatsController extends Controller
         $data = [
             'microformats' => SeoMicroformat::all(),
         ];
+
         return view('seo::microformats.index', $data);
     }
 
@@ -23,6 +26,7 @@ class SeoMicroformatsController extends Controller
             'model' => new SeoMicroformat(),
             'models' => SeoHelper::getModelsList(),
         ];
+
         return view('seo::microformats.create', $data);
     }
 
@@ -40,6 +44,7 @@ class SeoMicroformatsController extends Controller
         $data = [
             'model' => $microformat,
         ];
+
         return view('seo::microformats.edit', $data);
     }
 

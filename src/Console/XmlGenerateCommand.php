@@ -1,13 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Console;
 
+use Exception;
 use Hexide\Seo\Exceptions\FailedToOpenFileException;
 use Hexide\Seo\Exceptions\FailedToWriteToFileException;
 use Hexide\Seo\Exceptions\MissingInterfaceException;
 use Hexide\Seo\Interfaces\XmlGenerator;
 use Hexide\Seo\Models\XmlSitemap;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class XmlGenerateCommand extends Command
 {
@@ -17,18 +22,18 @@ class XmlGenerateCommand extends Command
 
     private array $allowedMimeTypes = ['text/xml', 'application/xml'];
 
-    public function handle()
+    public function handle(): void
     {
         $hasNewFiles = $this->generateAdditionalSitemaps();
 
         if ($hasNewFiles) {
             try {
                 $this->generateMainSitemap();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $message = "XML Sitemap generation for general sitemap - " . $e->getMessage();
 
                 // if command was executed in cron, we have to log errors
-                \Log::error($message);
+                Log::error($message);
 
                 // in case command was executed manually
                 $this->error($message);
@@ -42,7 +47,6 @@ class XmlGenerateCommand extends Command
      */
     private function generateMainSitemap(): void
     {
-
         $files = $this->getFilesFromDirectory('public/sitemaps', url('sitemaps'));
 
         $text = view('seo::partials.sitemap', ['urls' => $files])->render();
@@ -53,10 +57,13 @@ class XmlGenerateCommand extends Command
     private function getFilesFromDirectory(string $scanPath, string $sitemapPath): array
     {
         $result = [];
-        $files = array_diff(scandir($scanPath), array('.', '..'));
+        $files = array_diff(scandir($scanPath), ['.', '..']);
         foreach ($files as $file) {
             if (is_dir($scanPath . '/' . $file)) {
-                $result = array_merge($result, $this->getFilesFromDirectory($scanPath . '/' . $file, $sitemapPath . '/' . $file));
+                $result = array_merge(
+                    $result,
+                    $this->getFilesFromDirectory($scanPath . '/' . $file, $sitemapPath . '/' . $file)
+                );
             } elseif (in_array(mime_content_type($scanPath . '/' . $file), $this->allowedMimeTypes)) {
                 $result[] = $sitemapPath . '/' . $file;
             }
@@ -72,16 +79,16 @@ class XmlGenerateCommand extends Command
         foreach ($sitemaps as $sitemap) {
             try {
                 if ($sitemap->needsUpdate()) {
-                    $path = "public/sitemaps/$sitemap->slug";
+                    $path = "public/sitemaps/{$sitemap->slug}";
                     $this->update($sitemap, $path);
                     $generated = true;
                     $sitemap->update(['generated_at' => now()]);
                 }
-            } catch (\Exception $e) {
-                $message = "XML Sitemap generation for $sitemap->slug - " . $e->getMessage();
+            } catch (Exception $e) {
+                $message = "XML Sitemap generation for {$sitemap->slug} - " . $e->getMessage();
 
                 // if command was executed in cron, we have to log errors
-                \Log::error($message);
+                Log::error($message);
 
                 // in case command was executed manually
                 $this->error($message);
@@ -96,19 +103,19 @@ class XmlGenerateCommand extends Command
      * @throws FailedToWriteToFileException
      * @throws MissingInterfaceException
      */
-    private function update(XmlSitemap $sitemap, string $globalPath)
+    private function update(XmlSitemap $sitemap, string $globalPath): void
     {
         $generator = $sitemap->getGeneratorInstance();
 
-        if (! in_array(XmlGenerator::class, class_implements($generator))) {
-            throw new MissingInterfaceException("Generator class $sitemap->generator missing XmlGenerator interface");
+        if (!in_array(XmlGenerator::class, class_implements($generator))) {
+            throw new MissingInterfaceException("Generator class {$sitemap->generator} missing XmlGenerator interface");
         }
 
         if (file_exists($globalPath)) {
-            \File::deleteDirectory($globalPath);
+            File::deleteDirectory($globalPath);
         }
 
-        \File::makeDirectory($globalPath, 0775, true, true);
+        File::makeDirectory($globalPath, 0775, true, true);
 
         $page = 0;
 
@@ -128,7 +135,7 @@ class XmlGenerateCommand extends Command
             ];
             $text = view('seo::partials.xml', $viewData)->render();
 
-            $this->writeToFile($text, "$globalPath/$page.xml");
+            $this->writeToFile($text, "{$globalPath}/{$page}.xml");
 
             $shouldContinue = $numOfData == config('hexide-seo.batch_size');
         } while ($shouldContinue);
@@ -138,19 +145,19 @@ class XmlGenerateCommand extends Command
      * @throws FailedToOpenFileException
      * @throws FailedToWriteToFileException
      */
-    private function writeToFile(string $text, string $path)
+    private function writeToFile(string $text, string $path): void
     {
         $stream = fopen($path, 'w');
 
         if (!$stream) {
-            throw new FailedToOpenFileException("Failed to open stream: $path");
+            throw new FailedToOpenFileException("Failed to open stream: {$path}");
         }
 
         $isWritten = fwrite($stream, $text);
         fclose($stream);
 
-        if (! $isWritten) {
-            throw new FailedToWriteToFileException("Failed to write to file $path");
+        if (!$isWritten) {
+            throw new FailedToWriteToFileException("Failed to write to file {$path}");
         }
     }
 }

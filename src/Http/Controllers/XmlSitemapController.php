@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
@@ -14,6 +16,7 @@ class XmlSitemapController extends Controller
         $data = [
             'xml_sitemaps' => XmlSitemap::all(),
         ];
+
         return view('seo::xml_sitemaps.index', $data);
     }
 
@@ -24,6 +27,7 @@ class XmlSitemapController extends Controller
             'changeFreqs' => XmlSitemap::$changeFreqs,
             'model' => new XmlSitemap(),
         ];
+
         return view('seo::xml_sitemaps.create', $data);
     }
 
@@ -43,6 +47,7 @@ class XmlSitemapController extends Controller
             'changeFreqs' => XmlSitemap::$changeFreqs,
             'model' => $xml_sitemap,
         ];
+
         return view('seo::xml_sitemaps.edit', $data);
     }
 

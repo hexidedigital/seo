@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 class SeoAnalytic
@@ -8,7 +10,7 @@ class SeoAnalytic
     {
         $key = Models\SeoAnalytic::first()?->gtm_id;
 
-        if (! $key) {
+        if (!$key) {
             return null;
         }
 
@@ -23,7 +25,7 @@ class SeoAnalytic
     {
         $key = Models\SeoAnalytic::first()?->ga_tracking_id;
 
-        if (! $key) {
+        if (!$key) {
             return null;
         }
 
@@ -34,7 +36,7 @@ class SeoAnalytic
     {
         $key = Models\SeoAnalytic::first()?->fb_pixel_id;
 
-        if (! $key) {
+        if (!$key) {
             return null;
         }
 
@@ -49,7 +51,7 @@ class SeoAnalytic
     {
         $key = Models\SeoAnalytic::first()?->hjar_id;
 
-        if (! $key) {
+        if (!$key) {
             return null;
         }
 

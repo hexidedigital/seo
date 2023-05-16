@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
@@ -14,6 +16,7 @@ class SeoTemplateController extends Controller
         $data = [
             'templates' => SeoTemplate::all(),
         ];
+
         return view('seo::templates.index', $data);
     }
 
@@ -23,13 +26,13 @@ class SeoTemplateController extends Controller
             'model' => new SeoTemplate(),
             'models' => SeoHelper::getModelsList(),
         ];
+
         return view('seo::templates.create', $data);
     }
 
     public function store(TemplateStoreRequest $request)
     {
         $data = $request->safe()->except('og_image', 'models');
-
 
         $models = $request->get('models', []);
 
@@ -52,6 +55,7 @@ class SeoTemplateController extends Controller
             'model' => $template,
             'models' => SeoHelper::getModelsList(),
         ];
+
         return view('seo::templates.edit', $data);
     }
 
@@ -61,12 +65,11 @@ class SeoTemplateController extends Controller
 
         $models = $request->get('models', []);
 
-        foreach (config('translatable.locales') as $locale)
-        {
-            if ($request->hasFile($locale.'.og_image')) {
-                $data[$locale]['og_image'] = SeoHelper::storeImage($request->file($locale.'.og_image'));
+        foreach (config('translatable.locales') as $locale) {
+            if ($request->hasFile($locale . '.og_image')) {
+                $data[$locale]['og_image'] = SeoHelper::storeImage($request->file($locale . '.og_image'));
                 SeoHelper::deleteImage($template->translate($locale)?->og_image);
-            } elseif($request->boolean($locale.'.isRemoveImage')) {
+            } elseif ($request->boolean($locale . '.isRemoveImage')) {
                 $data[$locale]['og_image'] = null;
                 SeoHelper::deleteImage($template->translate($locale)?->og_image);
             }
@@ -86,7 +89,7 @@ class SeoTemplateController extends Controller
         return redirect(SeoHelper::getRoute('templates.index'));
     }
 
-    private function syncModels(SeoTemplate $template, array $models)
+    private function syncModels(SeoTemplate $template, array $models): void
     {
         $template->models()->whereNotIn('model_name', $models)->delete();
 
@@ -97,7 +100,7 @@ class SeoTemplateController extends Controller
                 function ($model) use ($id) {
                     return [
                         'seo_template_id' => $id,
-                        'model_name' => $model
+                        'model_name' => $model,
                     ];
                 }
             )

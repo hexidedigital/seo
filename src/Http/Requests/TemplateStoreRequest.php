@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Http\Requests;
 
 use Hexide\Seo\Facades\SeoHelper;
@@ -31,7 +33,7 @@ class TemplateStoreRequest extends FormRequest
         $messages = [];
 
         foreach ($this->get('models', []) as $key => $val) {
-            $messages["models.$key.unique"] = "$val model is already connected to template";
+            $messages["models.{$key}.unique"] = "{$val} model is already connected to template";
         }
 
         return $messages;

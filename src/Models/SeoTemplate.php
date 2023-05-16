@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Models;
 
 use Astrotomic\Translatable\Translatable;
@@ -31,7 +33,6 @@ class SeoTemplate extends Model
     }
 
     /**
-     * @param             $query
      * @param string|null $modelTable
      * @param string|null $translationsTable
      * @param string|null $modelTableKey
@@ -41,19 +42,18 @@ class SeoTemplate extends Model
      */
     public function scopeJoinTranslations(
         Builder $query,
-                $modelTable = null,
-                $translationsTable = null,
-                $modelTableKey = null,
-                $translationsTableKey = null
-    )
-    {
-        if (! $modelTable) {
+        $modelTable = null,
+        $translationsTable = null,
+        $modelTableKey = null,
+        $translationsTableKey = null
+    ) {
+        if (!$modelTable) {
             $modelTable = $this->getTable();
         }
 
         $singularModelTable = Str::singular($modelTable);
 
-        if (! $translationsTable) {
+        if (!$translationsTable) {
             $translationsTable = $singularModelTable . "_translations";
         }
 
@@ -62,8 +62,8 @@ class SeoTemplate extends Model
 
         return $query->leftJoin(
             $translationsTable,
-            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey) {
-                $join->on("$translationsTable.$translationsTableKey", '=', "$modelTable.$modelTableKey")
+            function ($join) use ($modelTable, $translationsTable, $translationsTableKey, $modelTableKey): void {
+                $join->on("{$translationsTable}.{$translationsTableKey}", '=', "{$modelTable}.{$modelTableKey}")
                     ->where('locale', '=', app()->getLocale());
             }
         );

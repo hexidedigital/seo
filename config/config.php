@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*
      * Routes configuration
      */
     'routes' => [
         'web' => [
-            'middleware' => ['web', 'auth:web'], //default ['web', 'auth:web']
-            'prefix' => 'seo', //default seo
+            'middleware' => ['web', 'auth:web'], // default ['web', 'auth:web']
+            'prefix' => 'seo', // default seo
             'as' => 'seo.', // default seo.
         ],
         'api' => [
@@ -20,6 +22,7 @@ return [
     /*
      * Lifetime for cached data in RedirectMiddleware
      * In seconds
+     * Set 0, to disable caching
      *
      * Default 300
      */
@@ -75,7 +78,7 @@ return [
         ],
         'og_image_title' => [
             'og_image_title',
-        ]
+        ],
     ],
 
     /*
@@ -84,7 +87,7 @@ return [
      *
      */
     'variables' => [
-        'prefix' => '{\\$',
-        'postfix' => '}'
+        'prefix' => '{',
+        'postfix' => '}',
     ],
 ];

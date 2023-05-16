@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo\Api\v1\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -9,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     use AuthorizesRequests;
     use DispatchesJobs;
@@ -21,6 +23,7 @@ class Controller extends BaseController
      * @var int
      */
     protected $statusCode = 200;
+
     /**
      * Illuminate\Http\Request instance.
      *
@@ -37,6 +40,7 @@ class Controller extends BaseController
     {
         return $this->statusCode;
     }
+
     /**
      * Setter for statusCode.
      *
@@ -47,6 +51,7 @@ class Controller extends BaseController
     protected function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
+
         return $this;
     }
 
@@ -60,7 +65,7 @@ class Controller extends BaseController
     protected function respondWithError($message)
     {
         return $this->respondWithArray([
-            'message'   => $message,
+            'message' => $message,
             'error' => [
                 'http_code' => $this->statusCode,
             ],
@@ -76,17 +81,15 @@ class Controller extends BaseController
      */
     protected function errorNotFound($message = null)
     {
-        if (! $message) {
+        if (!$message) {
             $message = __('admin_labels.not_found');
         }
+
         return $this->setStatusCode(404)->respondWithError($message);
     }
 
     /**
      * Respond with a given array of items.
-     *
-     * @param array $array
-     * @param array $headers
      *
      * @return JsonResponse
      */

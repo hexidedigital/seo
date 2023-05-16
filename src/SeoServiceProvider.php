@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hexide\Seo;
 
 use Hexide\Seo\Console\XmlGenerateCommand;
+use Hexide\Seo\Http\Middleware\RedirectMiddleware;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Http\Kernel;
-use Hexide\Seo\Http\Middleware\RedirectMiddleware;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -13,24 +15,23 @@ use Illuminate\Support\ServiceProvider;
 class SeoServiceProvider extends ServiceProvider
 {
     private string $pkgPrefix = 'seo';
+
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerConfig();
         $this->registerFacades();
         $this->registerMiddleware();
     }
 
-    private function registerConfig()
+    private function registerConfig(): void
     {
         $this->mergeConfigFrom($this->packagePath('config/config.php'), 'hexide-seo');
     }
 
-    private function registerFacades()
+    private function registerFacades(): void
     {
         $this->bindFacade('seo-helper', new SeoHelper());
 
@@ -43,25 +44,21 @@ class SeoServiceProvider extends ServiceProvider
         $this->bindFacade('scripts', new Script());
     }
 
-    private function registerMiddleware()
+    private function registerMiddleware(): void
     {
         $this->app->make(Kernel::class)
             ->prependMiddleware(RedirectMiddleware::class);
     }
 
-    private function bindFacade(string $facadeName, $class)
+    private function bindFacade(string $facadeName, $class): void
     {
-        $this->app->bind($facadeName, function ($app) use ($class){
-            return $class;
-        });
+        $this->app->bind($facadeName, fn ($app) => $class);
     }
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // if user publishes
         $this->loadConfig();
@@ -75,18 +72,16 @@ class SeoServiceProvider extends ServiceProvider
         $this->scheduleCommands();
     }
 
-    private function loadConfig()
+    private function loadConfig(): void
     {
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 $this->packagePath('config/config.php') => config_path('hexide-seo.php'),
             ], 'config');
-
         }
     }
 
-    private function loadTranslations()
+    private function loadTranslations(): void
     {
         $this->loadTranslationsFrom($this->packagePath('resources/lang'), $this->pkgPrefix);
 
@@ -97,7 +92,7 @@ class SeoServiceProvider extends ServiceProvider
         }
     }
 
-    private function loadAssets()
+    private function loadAssets(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -125,8 +120,6 @@ class SeoServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom($this->packagePath('resources/views'), 'seo');
 
-
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 $this->packagePath('resources/views') => resource_path('views/vendor/seo'),
@@ -153,13 +146,13 @@ class SeoServiceProvider extends ServiceProvider
         return $config;
     }
 
-    public function aliasMiddleware()
+    public function aliasMiddleware(): void
     {
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('redirect', RedirectMiddleware::class);
     }
 
-    public function registerCommands()
+    public function registerCommands(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -168,9 +161,9 @@ class SeoServiceProvider extends ServiceProvider
         }
     }
 
-    public function scheduleCommands()
+    public function scheduleCommands(): void
     {
-        $this->app->booted(function () {
+        $this->app->booted(function (): void {
             $schedule = $this->app->make(Schedule::class);
             $schedule->command('xml:generate')->everyMinute();
         });
@@ -178,6 +171,6 @@ class SeoServiceProvider extends ServiceProvider
 
     private function packagePath($path): string
     {
-        return __DIR__."/../$path";
+        return __DIR__ . "/../{$path}";
     }
 }
