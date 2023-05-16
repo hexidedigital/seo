@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     use AuthorizesRequests;
     use DispatchesJobs;

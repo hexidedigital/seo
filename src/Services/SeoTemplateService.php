@@ -8,7 +8,7 @@ use Hexide\Seo\Facades\SeoHelper;
 
 class SeoTemplateService
 {
-    private $variableRegex;
+    private string $variableRegex;
 
     public function __construct()
     {

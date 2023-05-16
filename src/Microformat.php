@@ -12,7 +12,7 @@ class Microformat
     private SeoTemplateService $templateService;
     private $model;
 
-    public function __construct($model = null)
+    public function __construct( $model = null)
     {
         $this->templateService = new SeoTemplateService();
     }

@@ -16,7 +16,7 @@ class SeoTemplateController extends Controller
 
     public function modelMeta(Request $request, $model_namespace, $model_id)
     {
-        $model = $this->modelService->getModel($model_namespace, $model_id);
+        $model = $this->modelService->findModel($model_namespace, $model_id);
 
         $data = $request->boolean('as_html')
             ? Meta::for($model)->getMetaView($request->except('as_html'))

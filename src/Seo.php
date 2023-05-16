@@ -13,9 +13,9 @@ use Illuminate\Support\Str;
 
 class Seo
 {
-    private mixed $model;
-    private SeoTemplateService $templateService;
-    private ?GeneralMeta $generalMeta = null;
+    protected mixed $model;
+    protected SeoTemplateService $templateService;
+    protected ?GeneralMeta $generalMeta = null;
 
     public function __construct($model = null)
     {
@@ -68,7 +68,7 @@ class Seo
         return SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => $this->getAllMeta($data)])->render());
     }
 
-    private function getMetaValue(string $field, bool $asHtml = false): ?string
+    protected function getMetaValue(string $field, bool $asHtml = false): ?string
     {
         $value = null;
 
@@ -97,13 +97,15 @@ class Seo
         }
 
         if ($asHtml && $value) {
-            return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials._metadata', ['meta' => [$field => $value]])->render());
+            return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(
+                view('seo::partials._metadata', ['meta' => [$field => $value]])->render()
+            );
         }
 
         return $value;
     }
 
-    private function getMetaFromModel(string $field): ?string
+    protected function getMetaFromModel(string $field): ?string
     {
         $value = $this->model?->{$field};
 
@@ -230,7 +232,7 @@ class Seo
         return $data;
     }
 
-    private function mergeUrl(array $parsed_url, string $path): string
+    protected function mergeUrl(array $parsed_url, string $path): string
     {
         $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
 

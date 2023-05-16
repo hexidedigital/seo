@@ -9,13 +9,14 @@ use Hexide\Seo\Facades\Microformat;
 
 class SeoMicroformatController extends Controller
 {
-    public function __construct(private SeoModelService $modelService)
-    {
+    public function __construct(
+        protected readonly SeoModelService $modelService
+    ) {
     }
 
-    public function show($model_namespace, $model_id, $format)
+    public function show(string $model_namespace, $model_id, string $format)
     {
-        $model = $this->modelService->getModel($model_namespace, $model_id);
+        $model = $this->modelService->findModel($model_namespace, $model_id);
 
         $data = Microformat::for($model)->getMicroformat($format);
 
