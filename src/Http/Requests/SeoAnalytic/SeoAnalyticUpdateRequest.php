@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hexide\Seo\Http\Requests;
+namespace Hexide\Seo\Http\Requests\SeoAnalytic;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Hexide\Seo\Api\v1\Http\Controllers;
+namespace Hexide\Seo\Http\Controllers\Api;
 
 use Hexide\Seo\Facades\Scripts;
 use Illuminate\Http\Request;
 
-class SeoScriptsController extends Controller
+class SeoScriptsController extends BaseApiController
 {
     public function index(Request $request)
     {
@@ -19,7 +19,7 @@ class SeoScriptsController extends Controller
 
         $data = ['head' => Scripts::getHead(), 'body' => Scripts::getBody()];
 
-        return $this->respondWithArray(['value' => $data]);
+        return $this->respondWithData(['value' => $data]);
     }
 
     public function show(Request $request, $name)
@@ -32,6 +32,6 @@ class SeoScriptsController extends Controller
 
         $data = Scripts::getByName($name);
 
-        return $this->respondWithArray(['value' => $data]);
+        return $this->respondWithData(['value' => $data]);
     }
 }

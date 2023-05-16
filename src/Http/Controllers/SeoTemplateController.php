@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
-use Hexide\Seo\Http\Requests\TemplateStoreRequest;
-use Hexide\Seo\Http\Requests\TemplateUpdateRequest;
+use Hexide\Seo\Http\Requests\SeoTemplate\SeoTemplateStoreRequest;
+use Hexide\Seo\Http\Requests\SeoTemplate\SeoTemplateUpdateRequest;
 use Hexide\Seo\Models\SeoTemplate;
 
 class SeoTemplateController extends Controller
@@ -30,7 +30,7 @@ class SeoTemplateController extends Controller
         return view('seo::templates.create', $data);
     }
 
-    public function store(TemplateStoreRequest $request)
+    public function store(SeoTemplateStoreRequest $request)
     {
         $data = $request->safe()->except('og_image', 'models');
 
@@ -59,7 +59,7 @@ class SeoTemplateController extends Controller
         return view('seo::templates.edit', $data);
     }
 
-    public function update(SeoTemplate $template, TemplateUpdateRequest $request)
+    public function update(SeoTemplate $template, SeoTemplateUpdateRequest $request)
     {
         $data = $request->safe()->except('og_image', 'models');
 

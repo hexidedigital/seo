@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hexide\Seo\Api\v1\Http\Controllers;
+namespace Hexide\Seo\Http\Controllers\Api;
 
-use Hexide\Seo\Api\v1\Services\SeoModelService;
 use Hexide\Seo\Facades\Meta;
+use Hexide\Seo\Services\DatabaseModelFinder;
 use Illuminate\Http\Request;
 
-class SeoTemplateController extends Controller
+class SeoTemplateController extends BaseApiController
 {
-    public function __construct(private SeoModelService $modelService)
+    public function __construct(private DatabaseModelFinder $modelService)
     {
     }
 
@@ -22,6 +22,6 @@ class SeoTemplateController extends Controller
             ? Meta::for($model)->getMetaView($request->except('as_html'))
             : Meta::for($model)->getAllMeta($request->except('as_html'));
 
-        return $this->respondWithArray(['value' => $data]);
+        return $this->respondWithData(['value' => $data]);
     }
 }

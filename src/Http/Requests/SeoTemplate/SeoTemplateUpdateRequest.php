@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hexide\Seo\Http\Requests;
+namespace Hexide\Seo\Http\Requests\SeoTemplate;
 
 use Hexide\Seo\Facades\SeoHelper;
 use Hexide\Seo\Http\Requests\Traits\HasTranslationRules;
@@ -10,7 +10,7 @@ use Hexide\Seo\Models\SeoTemplateModels;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TemplateUpdateRequest extends FormRequest
+class SeoTemplateUpdateRequest extends FormRequest
 {
     use HasTranslationRules;
 
