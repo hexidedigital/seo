@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Hexide\Seo\Api\v1\Http\Controllers\SeoAnalyticsController;
-use Hexide\Seo\Api\v1\Http\Controllers\SeoMicroformatController;
-use Hexide\Seo\Api\v1\Http\Controllers\SeoScriptsController;
-use Hexide\Seo\Api\v1\Http\Controllers\SeoTemplateController;
+use Hexide\Seo\Http\Controllers\Api\SeoAnalyticsController;
+use Hexide\Seo\Http\Controllers\Api\SeoMicroformatController;
+use Hexide\Seo\Http\Controllers\Api\SeoScriptsController;
+use Hexide\Seo\Http\Controllers\Api\SeoTemplateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,12 +24,7 @@ Route::group(['prefix' => 'templates'], function () {
 
 Route::get('microformats/{model_namespace}/{model_id}/{format}', [SeoMicroformatController::class, 'show']);
 
-Route::group(['prefix' => 'analytics'], function () {
-    Route::get('gtm', [SeoAnalyticsController::class, 'showGtm']);
-    Route::get('google-analytics', [SeoAnalyticsController::class, 'showGoogleAnalytics']);
-    Route::get('meta-pixel', [SeoAnalyticsController::class, 'showMetaPixel']);
-    Route::get('hotjar', [SeoAnalyticsController::class, 'showHotjar']);
-});
+Route::get('analytics/{type}', [SeoAnalyticsController::class, 'show']);
 
 Route::group(['prefix' => 'scripts'], function () {
     Route::get('/', [SeoScriptsController::class, 'index']);

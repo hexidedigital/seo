@@ -4,57 +4,79 @@ declare(strict_types=1);
 
 namespace Hexide\Seo;
 
+use Hexide\Seo\Models\SeoAnalytic as SeoAnalyticModel;
+
 class SeoAnalytic
 {
+    protected string $key;
+    protected string $viewType;
+    protected bool $noscript = false;
+
     public function getGTM(bool $noscript = false): ?string
     {
-        $key = Models\SeoAnalytic::first()?->gtm_id;
+        $this->key = 'gtm_id';
+        $this->viewType = 'gtm';
+        $this->noscript = $noscript;
 
-        if (!$key) {
-            return null;
-        }
-
-        if ($noscript) {
-            return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials.gtm.noscript', ['key' => $key])->render());
-        }
-
-        return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials.gtm.main', ['key' => $key])->render());
+        return $this->getValue();
     }
 
     public function getGoogleAnalytics(): ?string
     {
-        $key = Models\SeoAnalytic::first()?->ga_tracking_id;
+        $this->key = 'ga_tracking_id';
+        $this->viewType = 'google_analytics';
 
-        if (!$key) {
-            return null;
-        }
-
-        return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials.google_analytics.main', ['key' => $key])->render());
+        return $this->getValue();
     }
 
     public function getMetaPixel(bool $noscript = false): ?string
     {
-        $key = Models\SeoAnalytic::first()?->fb_pixel_id;
+        $this->key = 'fb_pixel_id';
+        $this->viewType = 'facebook';
+        $this->noscript = $noscript;
 
-        if (!$key) {
-            return null;
-        }
-
-        if ($noscript) {
-            return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials.facebook.noscript', ['key' => $key])->render());
-        }
-
-        return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials.facebook.main', ['key' => $key])->render());
+        return $this->getValue();
     }
 
     public function getHotjar(): ?string
     {
-        $key = Models\SeoAnalytic::first()?->hjar_id;
+        $this->key = 'hjar_id';
+        $this->viewType = 'hotjar';
+
+        return $this->getValue();
+    }
+
+    protected function getValue(): ?string
+    {
+        $key = $this->getModel()?->getAttribute($this->key);
 
         if (!$key) {
             return null;
         }
 
-        return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(view('seo::partials.hotjar.main', ['key' => $key])->render());
+        return $this->getContent($this->resolveViewName(), $key);
+    }
+
+    protected function getModel(): SeoAnalyticModel
+    {
+        return SeoAnalyticModel::first();
+    }
+
+    protected function resolveViewName(): string
+    {
+        $base = "seo::partials.{$this->viewType}";
+
+        if ($this->noscript) {
+            return "{$base}.noscript";
+        }
+
+        return "{$base}.main";
+    }
+
+    protected function getContent(string $view, $key): string
+    {
+        return \Hexide\Seo\Facades\SeoHelper::cleanSpaces(
+            view($view, ['key' => $key])->render()
+        );
     }
 }

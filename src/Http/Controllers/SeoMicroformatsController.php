@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
-use Hexide\Seo\Http\Requests\MicroformatStoreRequest;
-use Hexide\Seo\Http\Requests\MicroformatUpdateRequest;
+use Hexide\Seo\Http\Requests\Microformat\MicroformatStoreRequest;
+use Hexide\Seo\Http\Requests\Microformat\MicroformatUpdateRequest;
 use Hexide\Seo\Models\SeoMicroformat;
 
 class SeoMicroformatsController extends Controller

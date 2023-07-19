@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
-use Hexide\Seo\Http\Requests\ScriptStoreRequest;
-use Hexide\Seo\Http\Requests\ScriptUpdateRequest;
+use Hexide\Seo\Http\Requests\SeoScript\SeoScriptStoreRequest;
+use Hexide\Seo\Http\Requests\SeoScript\SeoScriptUpdateRequest;
 use Hexide\Seo\Models\SeoScript;
 
 class ScriptController extends Controller
@@ -30,7 +30,7 @@ class ScriptController extends Controller
         return view('seo::scripts.create', $data);
     }
 
-    public function store(ScriptStoreRequest $request)
+    public function store(SeoScriptStoreRequest $request)
     {
         $data = $request->validated();
 
@@ -49,7 +49,7 @@ class ScriptController extends Controller
         return view('seo::scripts.edit', $data);
     }
 
-    public function update(SeoScript $script, ScriptUpdateRequest $request)
+    public function update(SeoScript $script, SeoScriptUpdateRequest $request)
     {
         $data = $request->validated();
 

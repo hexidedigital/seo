@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hexide\Seo\Api\v1\Http\Controllers;
+namespace Hexide\Seo\Http\Controllers\Api;
 
-use Hexide\Seo\Api\v1\Services\SeoModelService;
 use Hexide\Seo\Facades\Microformat;
+use Hexide\Seo\Services\DatabaseModelFinder;
 
-class SeoMicroformatController extends Controller
+class SeoMicroformatController extends BaseApiController
 {
     public function __construct(
-        protected readonly SeoModelService $modelService
+        protected readonly DatabaseModelFinder $modelService
     ) {
     }
 
@@ -20,6 +20,6 @@ class SeoMicroformatController extends Controller
 
         $data = Microformat::for($model)->getMicroformat($format);
 
-        return $this->respondWithArray(['value' => $data]);
+        return $this->respondWithData(['value' => $data]);
     }
 }

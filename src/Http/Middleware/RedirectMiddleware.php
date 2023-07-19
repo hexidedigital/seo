@@ -9,16 +9,15 @@ use Exception;
 use Hexide\Seo\Models\RedirectRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class RedirectMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $rules = Cache::remember('rules', config('hexide-seo.cache_ttl'), fn () => RedirectRule::all());
-
         $path = $request->path();
 
-        foreach ($rules as $rule) {
+        foreach ($this->getRules() as $rule) {
             $pattern = "/{$rule->rule}/";
 
             try {
@@ -32,5 +31,22 @@ class RedirectMiddleware
         }
 
         return $next($request);
+    }
+
+    protected function getRules(): mixed
+    {
+        return Cache::remember(
+            $this->getCacheKey(),
+            config('hexide-seo.cache_ttl', 300),
+            fn () => RedirectRule::all()
+        );
+    }
+
+    protected function getCacheKey(): string
+    {
+        return Str::of($this::class)
+            ->slug()
+            ->append('-rules')
+            ->value();
     }
 }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Hexide\Seo\Http\Controllers;
 
 use Hexide\Seo\Facades\SeoHelper;
-use Hexide\Seo\Http\Requests\XmlSitemapStoreRequest;
-use Hexide\Seo\Http\Requests\XmlSitemapUpdateRequest;
+use Hexide\Seo\Http\Requests\XmlSitemap\XmlSitemapStoreRequest;
+use Hexide\Seo\Http\Requests\XmlSitemap\XmlSitemapUpdateRequest;
 use Hexide\Seo\Models\XmlSitemap;
 
 class XmlSitemapController extends Controller

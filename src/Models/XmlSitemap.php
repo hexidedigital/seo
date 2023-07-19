@@ -35,10 +35,10 @@ class XmlSitemap extends Model
         'generated_at',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'generated_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'generated_at' => 'datetime',
     ];
 
     public static function formOptions(): array
