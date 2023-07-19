@@ -9,10 +9,16 @@ use Hexide\Seo\Models\Traits\WithTranslations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method SeoTemplateTranslation translate(?string $locale = null, bool $withFallback = false)
+ * @mixin SeoTemplateTranslation
+ */
 class SeoTemplate extends Model
 {
     use Translatable;
     use WithTranslations;
+
+    public $translationModel = SeoTemplateTranslation::class;
 
     protected array $translatedAttributes = [
         'title',

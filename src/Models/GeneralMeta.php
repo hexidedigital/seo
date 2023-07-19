@@ -8,10 +8,18 @@ use Astrotomic\Translatable\Translatable;
 use Hexide\Seo\Models\Traits\WithTranslations;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method GeneralMetaTranslation translate(?string $locale = null, bool $withFallback = false)
+ * @mixin GeneralMetaTranslation
+ */
 class GeneralMeta extends Model
 {
     use Translatable;
     use WithTranslations;
+
+    public $translationModel = GeneralMetaTranslation::class;
+
+    protected $table = 'general_metas';
 
     protected array $translatedAttributes = [
         'group',
