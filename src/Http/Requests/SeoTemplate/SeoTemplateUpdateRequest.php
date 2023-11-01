@@ -6,6 +6,7 @@ namespace Hexide\Seo\Http\Requests\SeoTemplate;
 
 use Hexide\Seo\Facades\SeoHelper;
 use Hexide\Seo\Http\Requests\Traits\HasTranslationRules;
+use Hexide\Seo\Models\SeoTemplate;
 use Hexide\Seo\Models\SeoTemplateModels;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -16,6 +17,10 @@ class SeoTemplateUpdateRequest extends FormRequest
 
     public function rules(): array
     {
+        $id = $this->route('template');
+        if ($id instanceof SeoTemplate) {
+            $id = $id->id;
+        }
         $rules = [
             'group' => ['required', 'string', 'max:255'],
             $this->formatName('title') => ['nullable', 'string', 'max:255'],
@@ -31,7 +36,7 @@ class SeoTemplateUpdateRequest extends FormRequest
             'models.*' => [
                 'required',
                 Rule::unique(SeoTemplateModels::class, 'model_name')
-                    ->ignore($this->route('template'), 'seo_template_id'),
+                    ->ignore($id, 'seo_template_id'),
             ],
         ];
 
