@@ -163,7 +163,9 @@ class SeoServiceProvider extends ServiceProvider
     {
         $this->app->booted(function (): void {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('xml:generate')->everyMinute();
+            if (config("hexide-seo.cron.sitemap", false)) {
+                $schedule->command('xml:generate')->everyMinute();
+            }
         });
     }
 
